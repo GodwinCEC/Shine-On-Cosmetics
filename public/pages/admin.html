@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | Shine On Cosmetics</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body class="admin-page">
+    <nav class="admin-sidebar">
+      <div class="logo">SHINE ON ADMIN</div>
+      <ul class="admin-nav">
+        <li class="active">
+          <a href="#" onclick="showAdminTab('products')">Products</a>
+        </li>
+        <li><a href="#" onclick="showAdminTab('categories')">Categories</a></li>
+        <li><a href="#" onclick="showAdminTab('orders')">Orders</a></li>
+        <li><a href="/">Go to Site</a></li>
+      </ul>
+    </nav>
+
+    <main class="admin-content">
+      <section id="adminProducts" class="admin-tab">
+        <header class="admin-table-header">
+          <h2>Products</h2>
+          <button class="btn" onclick="openModal('addProductModal')">
+            + Add Product
+          </button>
+        </header>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Stock</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="adminProductsList">
+            <!-- Products will be listed here -->
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Add Product Modal -->
+      <div id="addProductModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Add New Product</h3>
+          <form id="addProductForm">
+            <div class="form-group">
+              <label>Product Name</label>
+              <input type="text" required />
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Price ($)</label>
+                <input type="number" step="0.01" required />
+              </div>
+              <div class="form-group">
+                <label>Stock</label>
+                <input type="number" required />
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select>
+                <option value="skincare">Skincare</option>
+                <option value="makeup">Makeup</option>
+                <option value="haircare">Haircare</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Featured</label>
+              <input type="checkbox" />
+            </div>
+            <div class="modal-actions">
+              <button
+                type="button"
+                class="btn btn-outline"
+                onclick="closeModal('addProductModal')"
+              >
+                Cancel
+              </button>
+              <button type="submit" class="btn">Save Product</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <script src="../js/admin-logic.js"></script>
+  </body>
+</html>

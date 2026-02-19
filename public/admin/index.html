@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | Shine On Cosmetics</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/admin/admin.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
+    />
+  </head>
+  <body class="admin-body">
+    <div class="admin-layout">
+      <!-- Sidebar -->
+      <aside class="admin-sidebar">
+        <div class="sidebar-header">
+          <a href="/" class="logo">SHINE ON</a>
+          <span>Admin</span>
+        </div>
+        <nav class="sidebar-nav">
+          <button class="nav-item active" data-tab="overview">
+            <span class="icon">📊</span> Overview
+          </button>
+          <button class="nav-item" data-tab="products">
+            <span class="icon">💄</span> Products
+          </button>
+          <button class="nav-item" data-tab="categories">
+            <span class="icon">🏷️</span> Categories
+          </button>
+          <button class="nav-item" data-tab="orders">
+            <span class="icon">🛍️</span> Orders
+          </button>
+          <button class="nav-item" data-tab="settings">
+            <span class="icon">⚙️</span> Settings
+          </button>
+        </nav>
+        <div class="sidebar-footer">
+          <button id="adminLogout" class="btn btn-outline btn-full">
+            Logout
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="admin-main">
+        <header class="admin-header">
+          <h1 id="pageTitle">Overview</h1>
+          <div class="header-actions">
+            <span id="adminName">Admin</span>
+            <div class="admin-avatar">✨</div>
+          </div>
+        </header>
+
+        <section id="adminContent" class="admin-content">
+          <!-- Dynamic Content Injected Here -->
+          <div class="dashboard-stats">
+            <div class="stat-card">
+              <h3>Total Orders</h3>
+              <p class="stat-value" id="totalOrders">...</p>
+            </div>
+            <div class="stat-card">
+              <h3>Revenue</h3>
+              <p class="stat-value" id="totalRevenue">...</p>
+            </div>
+            <div class="stat-card">
+              <h3>Active Products</h3>
+              <p class="stat-value" id="activeProducts">...</p>
+            </div>
+          </div>
+
+          <div class="recent-activity">
+            <h2>Recent Orders</h2>
+            <div class="table-container">
+              <table id="recentOrdersTable">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Injected via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="productModal" class="modal">
+      <!-- Product form content -->
+    </div>
+
+    <script src="/js/components/navbar.js"></script>
+    <!-- To keep logic for auth if needed -->
+    <script type="module" src="/admin/admin-logic.js"></script>
+  </body>
+</html>

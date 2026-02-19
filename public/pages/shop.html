@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Shop our curated collection of editorial beauty products" />
+    <title>Shop | Shine On Cosmetics</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/shop.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container shop-page">
+      <header class="shop-header">
+        <span class="section-tag">Explore the Collection</span>
+        <h1>The Curated Edit</h1>
+        <p class="shop-subtitle">Discover your perfect ritual from our carefully selected range</p>
+
+        <div class="shop-controls">
+          <div class="search-wrapper">
+            <input
+              type="text"
+              id="productSearch"
+              placeholder="Find your glow..."
+              aria-label="Search products"
+            />
+            <span class="search-icon">🔍</span>
+          </div>
+          
+          <div class="sort-wrapper">
+            <select id="sortSelect" aria-label="Sort products">
+              <option value="featured">Featured</option>
+              <option value="price-low">Price: Low to High</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="name">Name: A to Z</option>
+            </select>
+          </div>
+        </div>
+      </header>
+
+      <div class="shop-layout">
+        <aside class="shop-sidebar">
+          <div class="filter-group">
+            <h4 class="filter-title">Categories</h4>
+            <ul class="filter-list" id="categoryFilters">
+              <li class="filter-item active" data-category="all">
+                All Rituals <span class="filter-count"></span>
+              </li>
+              <li class="filter-item" data-category="Skin">
+                Skin <span class="filter-count"></span>
+              </li>
+              <li class="filter-item" data-category="Glow">
+                Glow <span class="filter-count"></span>
+              </li>
+              <li class="filter-item" data-category="Scents">
+                Scents <span class="filter-count"></span>
+              </li>
+              <li class="filter-item" data-category="Essentials">
+                Essentials <span class="filter-count"></span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="filter-group">
+            <h4 class="filter-title">Price Range</h4>
+            <div class="price-range-inputs">
+              <input type="number" id="minPrice" placeholder="Min" min="0" aria-label="Minimum price">
+              <span>—</span>
+              <input type="number" id="maxPrice" placeholder="Max" min="0" aria-label="Maximum price">
+            </div>
+            <button class="btn btn-outline btn-small" id="applyPriceFilter">Apply</button>
+          </div>
+
+          <div class="filter-group">
+            <h4 class="filter-title">Stock Status</h4>
+            <label class="checkbox-label">
+              <input type="checkbox" id="inStockOnly">
+              <span>In Stock Only</span>
+            </label>
+          </div>
+
+          <button class="btn btn-outline btn-full" id="clearFilters">Clear All Filters</button>
+        </aside>
+
+        <section class="shop-content">
+          <div class="results-header">
+            <p class="results-count" id="resultsCount">Showing all products</p>
+          </div>
+          
+          <div class="product-grid" id="shopGrid">
+            <!-- Products injected via JS -->
+          </div>
+
+          <div class="no-results" id="noResults" style="display: none;">
+            <div class="no-results-content">
+              <span style="font-size: 4rem; display: block; margin-bottom: 1rem;">🔍</span>
+              <h3>No products found</h3>
+              <p>Try adjusting your filters or search terms</p>
+              <button class="btn btn-primary" onclick="location.reload()">View All Products</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/components/navbar.js"></script>
+    <script src="../js/components/footer.js"></script>
+    <script type="module" src="../js/shop-logic.js"></script>
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Discover the story behind Shine On Cosmetics - editorial beauty with ethical ingredients"
+    />
+    <title>Our Story | Shine On Cosmetics</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/about.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
+    />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container about-page-content">
+      <section class="about-hero reveal">
+        <span class="section-tag">The Philosophy</span>
+        <h1>Pure. Editorial. Mindful.</h1>
+        <p class="subtitle">
+          Where botanical science meets editorial aesthetics
+        </p>
+      </section>
+
+      <section class="about-grid">
+        <div class="about-text reveal">
+          <h2>The Essence</h2>
+          <p>
+            Born in the intersection of botanical science and editorial
+            aesthetics, Shine On Cosmetics is more than a brand—it is a daily
+            ritual for the modern individual.
+          </p>
+          <p>
+            We believe that beauty should be high-performing, high-fashion, and
+            high-standard. Ethical ingredients meet stunning results. Every
+            formulation is crafted with intention, blending nature's most
+            powerful botanicals with cutting-edge skincare science.
+          </p>
+          <p>
+            Our commitment extends beyond the bottle. We're dedicated to
+            sustainable practices, cruelty-free testing, and empowering our
+            community to feel confident in their natural beauty.
+          </p>
+        </div>
+        <div class="about-image reveal">
+          <img
+            src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&q=80&w=1200"
+            alt="Minimalist Beauty Products"
+            loading="lazy"
+          />
+        </div>
+      </section>
+
+      <section class="values-showcase">
+        <h2 class="section-title reveal">Our Principles</h2>
+        <div class="values-grid-about">
+          <div class="value-box reveal">
+            <div class="value-number">01</div>
+            <h3>Clean Ingredients</h3>
+            <p>
+              We believe in transparency. Every ingredient is carefully
+              selected, ethically sourced, and free from harmful chemicals. What
+              goes on your skin matters.
+            </p>
+          </div>
+          <div class="value-box reveal">
+            <div class="value-number">02</div>
+            <h3>Sustainable Practices</h3>
+            <p>
+              From recyclable packaging to carbon-neutral shipping, we're
+              committed to minimizing our environmental footprint while
+              maximizing results.
+            </p>
+          </div>
+          <div class="value-box reveal">
+            <div class="value-number">03</div>
+            <h3>Cruelty-Free</h3>
+            <p>
+              Beauty should never come at the cost of animal welfare. All our
+              products are certified cruelty-free and we never test on animals.
+            </p>
+          </div>
+          <div class="value-box reveal">
+            <div class="value-number">04</div>
+            <h3>Editorial Quality</h3>
+            <p>
+              Professional-grade formulations worthy of the runway. Our products
+              deliver the same flawless finish you'd expect from a high-end
+              makeup artist.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-cta reveal">
+        <div class="cta-content">
+          <h2>Join the Ritual</h2>
+          <p>Experience the transformation. Discover your natural glow.</p>
+          <a href="/shop" class="btn btn-primary">Explore Products</a>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/components/navbar.js"></script>
+    <script src="../js/components/footer.js"></script>
+    <script>
+      // Scroll reveal animation
+      document.addEventListener("DOMContentLoaded", () => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: "0px 0px -100px 0px" },
+        );
+
+        document
+          .querySelectorAll(".reveal")
+          .forEach((el) => observer.observe(el));
+      });
+    </script>
+  </body>
+</html>

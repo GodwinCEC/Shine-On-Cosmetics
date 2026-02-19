@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Product details for premium editorial beauty products" />
+    <title>Product Details | Shine On</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/product.css" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>" />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container product-detail-page">
+      <div class="breadcrumb">
+        <a href="../index.html">Home</a>
+        <span>/</span>
+        <a href="shop.html">Shop</a>
+        <span>/</span>
+        <span id="breadcrumbProduct">Product</span>
+      </div>
+
+      <div id="productContent">
+        <!-- Content injected via JS -->
+      </div>
+
+      <section class="related-products">
+        <h2 class="section-title">You May Also Love</h2>
+        <div class="product-grid" id="relatedProducts">
+          <!-- Injected via JS -->
+        </div>
+      </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/components/navbar.js"></script>
+    <script src="../js/components/footer.js"></script>
+    <script type="module" src="../js/product-logic.js"></script>
+  </body>
+</html>

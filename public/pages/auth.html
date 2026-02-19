@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sign in to your Shine On account" />
+    <title>Sign In | Shine On</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/pages-common.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
+    />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="auth-page">
+      <div class="auth-card">
+        <h2>Welcome Back</h2>
+        <p>The ritual continues.</p>
+
+        <form class="auth-form" id="authForm">
+          <div class="form-group">
+            <label>Email Address</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="ritual@shineon.com"
+              required
+              autocomplete="email"
+            />
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="••••••••"
+              required
+              autocomplete="current-password"
+            />
+          </div>
+          <div
+            class="form-group"
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <label
+              style="
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                text-transform: none;
+                margin: 0;
+              "
+            >
+              <input
+                type="checkbox"
+                id="remember"
+                style="width: auto; padding: 0"
+              />
+              <span style="font-size: 0.9rem; font-weight: 400"
+                >Remember me</span
+              >
+            </label>
+            <a href="#" style="font-size: 0.9rem; color: var(--color-caramel)"
+              >Forgot password?</a
+            >
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">
+            Sign In
+          </button>
+        </form>
+
+        <div class="auth-divider">or</div>
+
+        <div class="auth-footer">
+          <p>
+            Don't have an account? <a href="#" id="toggleSignup">Create one</a>
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="../js/components/navbar.js"></script>
+    <script src="../js/components/footer.js"></script>
+    <script>
+      document.getElementById("authForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        // Simulate authentication
+        const user = {
+          email: email,
+          name: email.split("@")[0],
+          loggedInAt: new Date().toISOString(),
+        };
+
+        localStorage.setItem("user", JSON.stringify(user));
+
+        // Show success notification
+        const notification = document.createElement("div");
+        notification.textContent = "Welcome back! ✨";
+        notification.style.cssText = `
+          position: fixed;
+          top: 100px;
+          right: 20px;
+          background: #A8BF96;
+          color: white;
+          padding: 1rem 2rem;
+          border-radius: 100px;
+          font-family: var(--font-heading);
+          font-size: 0.9rem;
+          font-weight: 600;
+          box-shadow: var(--shadow-premium);
+          z-index: 10000;
+          animation: slideInRight 0.5s forwards;
+        `;
+
+        document.body.appendChild(notification);
+
+        // Redirect to dashboard
+        setTimeout(() => {
+          window.location.href = "/dashboard";
+        }, 1500);
+      });
+
+      // Toggle between sign in and sign up
+      document.getElementById("toggleSignup").addEventListener("click", (e) => {
+        e.preventDefault();
+        const card = document.querySelector(".auth-card");
+        const isSignIn =
+          card.querySelector("h2").textContent === "Welcome Back";
+
+        if (isSignIn) {
+          card.querySelector("h2").textContent = "Join the Ritual";
+          card.querySelector("p").textContent = "Create your sanctuary.";
+          card.querySelector('button[type="submit"]').textContent =
+            "Create Account";
+          document.getElementById("toggleSignup").textContent =
+            "Sign in instead";
+          document.querySelector(".auth-footer p").innerHTML =
+            'Already have an account? <a href="#" id="toggleSignup">Sign in instead</a>';
+
+          // Re-attach event listener
+          document
+            .getElementById("toggleSignup")
+            .addEventListener("click", arguments.callee);
+        } else {
+          card.querySelector("h2").textContent = "Welcome Back";
+          card.querySelector("p").textContent = "The ritual continues.";
+          card.querySelector('button[type="submit"]').textContent = "Sign In";
+          document.getElementById("toggleSignup").textContent = "Create one";
+          document.querySelector(".auth-footer p").innerHTML =
+            'Don\'t have an account? <a href="#" id="toggleSignup">Create one</a>';
+
+          // Re-attach event listener
+          document
+            .getElementById("toggleSignup")
+            .addEventListener("click", arguments.callee);
+        }
+      });
+    </script>
+  </body>
+</html>
