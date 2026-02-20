@@ -1,4 +1,5 @@
 import { db, auth } from '/js/firebase-services.js';
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import {
     collection,
     getDocs,
@@ -20,17 +21,14 @@ let orders = [];
 
 // Initialize
 async function initAdmin() {
-    auth.onAuthStateChanged(async (user) => {
+    onAuthStateChanged(auth, async (user) => {
         if (!user) {
             window.location.href = '/auth';
             return;
         }
 
-        // Simple check for now - in a real app, verify 'admin' role in Firestore
-        // const userDoc = await getDoc(doc(db, "users", user.uid));
-        // if (userDoc.data()?.role !== 'admin') { ... }
-
         setupTabListeners();
+        setupGlobalListeners();
         await loadInitialData();
         renderCurrentTab();
     });
@@ -45,7 +43,7 @@ function setupTabListeners() {
     });
 
     document.getElementById('adminLogout')?.addEventListener('click', () => {
-        auth.signOut().then(() => {
+        signOut(auth).then(() => {
             window.location.href = '/';
         });
     });
@@ -56,22 +54,19 @@ function switchTab(tab) {
     document.querySelectorAll('.nav-item').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.tab === tab);
     });
-    document.getElementById('pageTitle').textContent = tab.charAt(0).toUpperCase() + tab.slice(1);
+    const titleEl = document.getElementById('pageTitle');
+    if (titleEl) titleEl.textContent = tab.charAt(0).toUpperCase() + tab.slice(1);
     renderCurrentTab();
 }
 
 async function loadInitialData() {
-    // Show loading states
     try {
-        // Fetch Categories
         const catSnap = await getDocs(collection(db, "categories"));
         categories = catSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        // Fetch Products
         const prodSnap = await getDocs(collection(db, "products"));
         products = prodSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
-        // Fetch Recent Orders
         const ordersQuery = query(collection(db, "orders"), orderBy("createdAt", "desc"), limit(10));
         const orderSnap = await getDocs(ordersQuery);
         orders = orderSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -80,19 +75,6 @@ async function loadInitialData() {
     } catch (error) {
         console.error("Error loading admin data:", error);
     }
-}
-
-function updateStats() {
-    const totalOrders = document.getElementById('totalOrders');
-    const totalRevenue = document.getElementById('totalRevenue');
-    const activeProducts = document.getElementById('activeProducts');
-
-    if (totalOrders) totalOrders.textContent = orders.length; // Simplified for recent
-    if (activeProducts) activeProducts.textContent = products.filter(p => p.visible !== false).length;
-
-    // Revenue calculation
-    const revenue = orders.reduce((sum, order) => sum + (order.total || 0), 0);
-    if (totalRevenue) totalRevenue.textContent = `$${revenue.toFixed(2)}`;
 }
 
 function renderCurrentTab() {
@@ -113,26 +95,65 @@ function renderCurrentTab() {
             renderOrdersManagement();
             break;
         case 'settings':
-            content.innerHTML = `<div class="stat-card"><h2>Shop Settings</h2><p>General store configuration coming soon.</p></div>`;
+            content.innerHTML = `<div class="stat-card"><span class="stat-label">Shop Settings</span><p>General store configuration coming soon.</p></div>`;
             break;
     }
 }
 
+function setupGlobalListeners() {
+    const orderToggle = document.getElementById('orderToggle');
+    if (orderToggle) {
+        orderToggle.addEventListener('click', () => {
+            orderToggle.classList.toggle('active');
+            const isActive = orderToggle.classList.contains('active');
+            console.log('Accepting orders:', isActive);
+        });
+    }
+}
+
+function updateStats() {
+    const totalOrdersEl = document.getElementById('totalOrders');
+    const expectedRevenueEl = document.getElementById('expectedRevenue');
+    const paidRevenueEl = document.getElementById('paidRevenue');
+    const activeProductsEl = document.getElementById('activeProducts');
+
+    if (totalOrdersEl) totalOrdersEl.textContent = orders.length;
+    if (activeProductsEl) activeProductsEl.textContent = products.filter(p => p.visible !== false).length;
+
+    // Revenue categories
+    // Expected: All orders (assuming COD is expected until paid)
+    // Paid: Orders with status 'Paid' or 'Shipped'
+    const expectedRevenue = orders.reduce((sum, order) => sum + (order.total || 0), 0);
+    const paidRevenue = orders.filter(o => ['Paid', 'Shipped'].includes(o.status))
+        .reduce((sum, order) => sum + (order.total || 0), 0);
+
+    if (expectedRevenueEl) expectedRevenueEl.textContent = `$${expectedRevenue.toFixed(2)}`;
+    if (paidRevenueEl) paidRevenueEl.textContent = `$${paidRevenue.toFixed(2)}`;
+}
+
 function renderOverview() {
     const content = document.getElementById('adminContent');
+    const expectedRevenue = orders.reduce((sum, o) => sum + (o.total || 0), 0);
+    const paidRevenue = orders.filter(o => ['Paid', 'Shipped'].includes(o.status))
+        .reduce((sum, o) => sum + (o.total || 0), 0);
+
     content.innerHTML = `
         <div class="dashboard-stats">
             <div class="stat-card">
-                <h3>Total Orders</h3>
+                <span class="stat-label">Total Orders</span>
                 <p class="stat-value">${orders.length}</p>
             </div>
             <div class="stat-card">
-                <h3>Estimated Revenue</h3>
-                <p class="stat-value">$${orders.reduce((sum, o) => sum + (o.total || 0), 0).toFixed(2)}</p>
+                <span class="stat-label">Expected Revenue</span>
+                <p class="stat-value">$${expectedRevenue.toFixed(2)}</p>
             </div>
             <div class="stat-card">
-                <h3>Products</h3>
-                <p class="stat-value">${products.length}</p>
+                <span class="stat-label">Paid Revenue</span>
+                <p class="stat-value">$${paidRevenue.toFixed(2)}</p>
+            </div>
+            <div class="stat-card">
+                <span class="stat-label">Active Products</span>
+                <p class="stat-value">${products.filter(p => p.visible !== false).length}</p>
             </div>
         </div>
         
@@ -141,29 +162,31 @@ function renderOverview() {
                 <h2>Recent Orders</h2>
                 <button class="btn btn-outline" onclick="window.switchTab('orders')">View All</button>
             </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Order ID</th>
-                            <th>Customer</th>
-                            <th>Amount</th>
-                            <th>Status</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${orders.map(order => `
+            <div class="table-wrapper">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
                             <tr>
-                                <td>#${order.id.slice(-6)}</td>
-                                <td>${order.customerName || 'Guest'}</td>
-                                <td>$${(order.total || 0).toFixed(2)}</td>
-                                <td><span class="status-badge status-${(order.status || 'pending').toLowerCase()}">${order.status || 'Pending'}</span></td>
-                                <td>${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString() : 'N/A'}</td>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
                             </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            ${orders.slice(0, 5).map(order => `
+                                <tr>
+                                    <td>#${order.id.slice(-6)}</td>
+                                    <td>${order.customerName || 'Guest'}</td>
+                                    <td>$${(order.total || 0).toFixed(2)}</td>
+                                    <td><span class="status-badge status-${(order.status || 'pending').toLowerCase()}">${order.status || 'Pending'}</span></td>
+                                    <td>${order.createdAt?.toDate ? order.createdAt.toDate().toLocaleDateString() : 'N/A'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     `;
@@ -210,9 +233,16 @@ function renderProductsManagement() {
     `;
 
     document.getElementById('addNewProduct')?.addEventListener('click', () => {
-        // Modal logic
-        alert('Product creation form modal would open here.');
+        document.getElementById('modalTitle').textContent = 'Add New Product';
+        document.getElementById('productForm').reset();
+        document.getElementById('productModal').classList.add('active');
     });
+
+    // Populate Category Select in modal
+    const catSelect = document.getElementById('prodCategory');
+    if (catSelect) {
+        catSelect.innerHTML = categories.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+    }
 }
 
 function renderCategoriesManagement() {
@@ -296,11 +326,35 @@ function renderOrdersManagement() {
     `;
 }
 
-// Global exposure for simple onclick handlers (for demo/simplicity)
+// Product Management Helpers
+function editProduct(id) {
+    const product = products.find(p => p.id === id);
+    if (!product) return;
+
+    document.getElementById('modalTitle').textContent = 'Edit Product';
+    document.getElementById('prodName').value = product.name;
+    document.getElementById('prodPrice').value = product.price;
+    document.getElementById('prodCategory').value = product.category;
+    document.getElementById('prodImage').value = product.images?.thumbnail || '';
+
+    document.getElementById('productModal').classList.add('active');
+}
+
+function deleteProduct(id) {
+    if (confirm('Are you sure you want to delete this product?')) {
+        // deleteDoc(doc(db, "products", id));
+        console.log('Delete product:', id);
+    }
+}
+
+function closeModal() {
+    document.getElementById('productModal').classList.remove('active');
+}
+
+// Global exposure
 window.switchTab = switchTab;
-window.editProduct = (id) => console.log('Edit product', id);
-window.deleteProduct = (id) => console.log('Delete product', id);
-window.editCategory = (id) => console.log('Edit category', id);
-window.deleteCategory = (id) => console.log('Delete category', id);
+window.editProduct = editProduct;
+window.deleteProduct = deleteProduct;
+window.closeModal = closeModal;
 
 document.addEventListener('DOMContentLoaded', initAdmin);

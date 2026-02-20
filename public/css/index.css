@@ -138,32 +138,73 @@
     pointer-events: none;
 }
 
-/* Featured Section - Enhanced */
+/* Featured Section - Slider Edition */
 .featured-section {
-    padding: var(--space-2xl) 0;
+    padding: var(--space-xl) 0;
     position: relative;
+    overflow: hidden;
 }
 
 .section-header {
     text-align: center;
-    margin-bottom: var(--space-lg);
+    margin-bottom: var(--space-md);
 }
 
 .section-title {
     font-size: clamp(2.5rem, 5vw, 4.5rem);
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .section-subtitle {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
-    max-width: 600px;
-    margin: 0 auto 3rem;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+}
+
+.featured-ritual-slider {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 2.5rem;
+    padding: 2rem 10vw;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    cursor: grab;
+}
+
+.featured-ritual-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.featured-ritual-slider:active {
+    cursor: grabbing;
+}
+
+.featured-ritual-slider .product-card {
+    flex: 0 0 100%;
+    scroll-snap-align: center;
+    max-width: 850px;
+    margin: 0 auto;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s;
+}
+
+/* Make it look like "One at a time" on desktop too */
+@media (min-width: 768px) {
+    .featured-ritual-slider .product-card {
+        flex: 0 0 70%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .featured-ritual-slider .product-card {
+        flex: 0 0 60%;
+    }
 }
 
 .section-cta {
     text-align: center;
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 /* Values Section */

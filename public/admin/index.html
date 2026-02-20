@@ -47,9 +47,15 @@
       <main class="admin-main">
         <header class="admin-header">
           <h1 id="pageTitle">Overview</h1>
-          <div class="header-actions">
-            <span id="adminName">Admin</span>
-            <div class="admin-avatar">✨</div>
+          <div class="header-right">
+            <div class="status-toggle">
+              <span>Accepting Orders</span>
+              <div class="toggle-switch active" id="orderToggle"></div>
+            </div>
+            <div class="admin-profile">
+              <span id="adminName">Admin</span>
+              <div class="admin-avatar">✨</div>
+            </div>
           </div>
         </header>
 
@@ -57,36 +63,42 @@
           <!-- Dynamic Content Injected Here -->
           <div class="dashboard-stats">
             <div class="stat-card">
-              <h3>Total Orders</h3>
-              <p class="stat-value" id="totalOrders">...</p>
+              <span class="stat-label">Total Orders</span>
+              <p class="stat-value" id="totalOrders">0</p>
             </div>
             <div class="stat-card">
-              <h3>Revenue</h3>
-              <p class="stat-value" id="totalRevenue">...</p>
+              <span class="stat-label">Expected Revenue</span>
+              <p class="stat-value" id="expectedRevenue">$0.00</p>
             </div>
             <div class="stat-card">
-              <h3>Active Products</h3>
-              <p class="stat-value" id="activeProducts">...</p>
+              <span class="stat-label">Paid Revenue</span>
+              <p class="stat-value" id="paidRevenue">$0.00</p>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Active Products</span>
+              <p class="stat-value" id="activeProducts">0</p>
             </div>
           </div>
 
           <div class="recent-activity">
             <h2>Recent Orders</h2>
-            <div class="table-container">
-              <table id="recentOrdersTable">
-                <thead>
-                  <tr>
-                    <th>Order ID</th>
-                    <th>Customer</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <!-- Injected via JS -->
-                </tbody>
-              </table>
+            <div class="table-wrapper">
+              <div class="table-responsive">
+                <table id="recentOrdersTable">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Customer</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Injected via JS -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </section>
@@ -95,7 +107,56 @@
 
     <!-- Modals -->
     <div id="productModal" class="modal">
-      <!-- Product form content -->
+      <div class="modal-content">
+        <h2 id="modalTitle">Add New Product</h2>
+        <form id="productForm" class="auth-form">
+          <div class="form-group">
+            <label>Product Name</label>
+            <input
+              type="text"
+              id="prodName"
+              placeholder="e.g. Silk Glow Serum"
+              required
+            />
+          </div>
+          <div
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem"
+          >
+            <div class="form-group">
+              <label>Category</label>
+              <select id="prodCategory" required>
+                <!-- Injected -->
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Price ($)</label>
+              <input
+                type="number"
+                id="prodPrice"
+                step="0.01"
+                value="25.00"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Thumbnail URL</label>
+            <input type="text" id="prodImage" placeholder="https://..." />
+          </div>
+          <div style="display: flex; gap: 1rem; margin-top: 2rem">
+            <button
+              type="button"
+              class="btn btn-outline btn-full"
+              onclick="window.closeModal()"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary btn-full">
+              Save Product
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <script src="/js/components/navbar.js"></script>

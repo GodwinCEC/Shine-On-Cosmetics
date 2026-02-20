@@ -98,7 +98,7 @@ function initScrollReveal() {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
-// Hero Carousel Logic - Enhanced 3D Rotation
+// Hero Carousel Logic - Fixed for smooth transitions
 function initHeroCarousel() {
     const queue = document.getElementById('heroQueue');
     if (!queue) return;
@@ -106,13 +106,21 @@ function initHeroCarousel() {
     const featured = getFeaturedProducts().slice(0, 5);
     let currentIndex = 0;
 
-    function renderCarousel() {
-        queue.innerHTML = '';
-        featured.forEach((product, index) => {
-            const item = document.createElement('div');
-            item.className = 'queue-item';
+    // Create cards once
+    queue.innerHTML = featured.map((product, index) => `
+        <div class="queue-item" data-index="${index}">
+            <img src="${product.image}" alt="${product.name}" loading="lazy">
+        </div>
+    `).join('');
 
+    const items = queue.querySelectorAll('.queue-item');
+
+    function updateCarousel() {
+        items.forEach((item, index) => {
             const relativeIndex = (index - currentIndex + featured.length) % featured.length;
+
+            // Remove all position classes
+            item.classList.remove('focus', 'back-right', 'back-left', 'hidden');
 
             if (relativeIndex === 0) {
                 item.classList.add('focus');
@@ -123,43 +131,43 @@ function initHeroCarousel() {
             } else {
                 item.classList.add('hidden');
             }
-
-            item.innerHTML = `<img src="${product.image}" alt="${product.name}" loading="lazy">`;
-            item.addEventListener('click', () => {
-                if (item.classList.contains('focus')) {
-                    window.location.href = `/product?id=${product.id}`;
-                }
-            });
-
-            queue.appendChild(item);
         });
     }
 
     function rotate() {
         currentIndex = (currentIndex + 1) % featured.length;
-        renderCarousel();
+        updateCarousel();
     }
 
-    renderCarousel();
-    const interval = setInterval(rotate, 4500);
+    // Add click handlers for the items themselves
+    items.forEach((item, index) => {
+        item.addEventListener('click', () => {
+            if (item.classList.contains('focus')) {
+                window.location.href = `/product?id=${featured[index].id}`;
+            }
+        });
+    });
 
-    // Pause on hover
+    updateCarousel();
+    let interval = setInterval(rotate, 4500);
+
     queue.addEventListener('mouseenter', () => clearInterval(interval));
     queue.addEventListener('mouseleave', () => {
         clearInterval(interval);
-        setInterval(rotate, 4500);
+        interval = setInterval(rotate, 4500);
     });
 }
 
-// Featured Products Grid
+// Featured Products Grid - Limit to 3 and fix reveal
 function initFeaturedProducts() {
     const grid = document.getElementById('featuredProducts');
     if (!grid) return;
 
-    const featured = getFeaturedProducts().slice(0, 8);
+    // We only want the top 3 featured products as requested
+    const featured = getFeaturedProducts().slice(0, 3);
 
     grid.innerHTML = featured.map((product, index) => `
-        <div class="product-card reveal" style="animation-delay: ${index * 0.1}s" data-product-id="${product.id}">
+        <div class="product-card reveal" style="transition-delay: ${index * 0.1}s" data-product-id="${product.id}">
             <div class="card-img">
                 <img src="${product.image}" alt="${product.name}" loading="lazy">
             </div>
@@ -170,6 +178,17 @@ function initFeaturedProducts() {
             </div>
         </div>
     `).join('');
+
+    // Re-initialize Scroll Reveal for the new elements
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.1 });
+
+    grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
     // Add click handlers
     grid.querySelectorAll('.product-card').forEach(card => {

@@ -1,19 +1,6 @@
-Perfect. Since this is a **real production e-commerce system**, your README should be:
+#Shine On Cosmetics Official Website
 
-* Professional
-* Clear for collaborators
-* Structured for engineers
-* Ready for future scaling
-* Not overly verbose
-
-Here’s a strong, clean, production-level `README.md` you can use.
-
----
-
-```markdown
-# Patinasa – Shine On Cosmetics Official Website
-
-Patinasa is the official e-commerce platform for **Shine On Cosmetics**, a high-end editorial beauty brand. The platform enables customers to browse cosmetic products, manage wishlists, place orders, and complete payments securely online.
+Shine On Cosmetics is the official e-commerce platform for **Shine On Cosmetics**, a high-end editorial beauty brand. The platform enables customers to browse cosmetic products, manage wishlists, place orders, and complete payments securely online.
 
 Built with HTML, CSS, and Vanilla JavaScript, powered by Firebase.
 
@@ -21,7 +8,7 @@ Built with HTML, CSS, and Vanilla JavaScript, powered by Firebase.
 
 ## ✨ Overview
 
-Patinasa delivers a modern, minimalist, and premium shopping experience focused on:
+Shine On Cosmetics delivers a modern, minimalist, and premium shopping experience focused on:
 
 - Clean editorial aesthetic
 - Smooth animations and transitions
@@ -104,7 +91,7 @@ Design principles:
 
 ```
 
-/patinasa
+/Shine On Cosmetics
 │
 ├── index.html
 ├── about.html
@@ -253,24 +240,11 @@ Hero product queue adapts per viewport.
 
 Shine On Cosmetics is a premium beauty brand offering curated cosmetic products designed to enhance natural beauty with an elegant editorial aesthetic.
 
-Official Online Store: Patinasa
 
 ---
 
 ## 👨🏾‍💻 Developer
 
 Built and maintained by:
-Godwin
-```
+Godwin Mawulikplim
 
----
-
-This README is:
-
-* Professional
-* Investor-safe
-* Engineer-friendly
-* Structured for scaling
-* Clean and production-level
-
----
