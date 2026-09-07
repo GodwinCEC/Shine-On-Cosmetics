@@ -3,9 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard | Shine On Cosmetics</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/admin/admin.css" />
+    <title>Admin Dashboard - Shine On Cosmetics</title>
+    <link rel="stylesheet" href="/admin/admin.css?v=0.1.3" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cormorant:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
@@ -14,77 +23,142 @@
   <body class="admin-body">
     <div class="admin-layout">
       <!-- Sidebar -->
-      <aside class="admin-sidebar">
+      <aside class="admin-sidebar" id="adminSidebar">
         <div class="sidebar-header">
-          <a href="/" class="logo">SHINE ON</a>
-          <span>Admin</span>
+          <a href="../index.html" class="admin-logo">
+            <span class="logo-icon">✨</span>
+            <span class="logo-text">SHINE ON</span>
+          </a>
+          <span class="admin-badge">Admin</span>
         </div>
+
         <nav class="sidebar-nav">
           <button class="nav-item active" data-tab="overview">
-            <span class="icon">📊</span> Overview
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Overview</span>
           </button>
           <button class="nav-item" data-tab="products">
-            <span class="icon">💄</span> Products
+            <span class="nav-icon">💄</span>
+            <span class="nav-label">Products</span>
           </button>
           <button class="nav-item" data-tab="categories">
-            <span class="icon">🏷️</span> Categories
+            <span class="nav-icon">🏷️</span>
+            <span class="nav-label">Categories</span>
           </button>
-          <button class="nav-item" data-tab="orders">
-            <span class="icon">🛍️</span> Orders
+          <button class="nav-item" data-tab="tags">
+            <span class="nav-icon">🔖</span>
+            <span class="nav-label">Tags</span>
+          </button>
+          <button class="nav-item" data-tab="users">
+            <span class="nav-icon">👥</span>
+            <span class="nav-label">Users</span>
+          </button>
+          <button class="nav-item" data-tab="contacts">
+            <span class="nav-icon">✉️</span>
+            <span class="nav-label">Inquiries</span>
           </button>
           <button class="nav-item" data-tab="settings">
-            <span class="icon">⚙️</span> Settings
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Settings</span>
           </button>
         </nav>
+
         <div class="sidebar-footer">
-          <button id="adminLogout" class="btn btn-outline btn-full">
-            Logout
+          <button id="adminLogout" class="logout-btn">
+            <span class="logout-icon">👋</span>
+            <span class="logout-text">Logout</span>
           </button>
         </div>
+
+        <button class="sidebar-close" id="sidebarClose">
+          <span>✕</span>
+        </button>
       </aside>
+
+      <!-- Sidebar Overlay for Mobile -->
+      <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
       <!-- Main Content -->
       <main class="admin-main">
+        <!-- Header -->
         <header class="admin-header">
-          <h1 id="pageTitle">Overview</h1>
+          <div class="header-left">
+            <button class="menu-toggle" id="menuToggle">
+              <span></span>
+              <span></span>
+              <span></span>
+            </button>
+            <h1 id="pageTitle">Overview</h1>
+          </div>
+
           <div class="header-right">
-            <div class="status-toggle">
-              <span>Accepting Orders</span>
-              <div class="toggle-switch active" id="orderToggle"></div>
+            <div class="status-toggle-wrap">
+              <span class="status-label">Accepting Orders</span>
+              <button
+                class="toggle-switch active"
+                id="orderToggle"
+                aria-label="Toggle accepting orders"
+              >
+                <span class="toggle-slider"></span>
+              </button>
             </div>
+
             <div class="admin-profile">
-              <span id="adminName">Admin</span>
+              <span class="admin-name" id="adminName">Admin</span>
               <div class="admin-avatar">✨</div>
             </div>
           </div>
         </header>
 
+        <!-- Content Area -->
         <section id="adminContent" class="admin-content">
           <!-- Dynamic Content Injected Here -->
           <div class="dashboard-stats">
             <div class="stat-card">
-              <span class="stat-label">Total Orders</span>
+              <div class="stat-header">
+                <span class="stat-icon">📦</span>
+                <span class="stat-label">Total Orders</span>
+              </div>
               <p class="stat-value" id="totalOrders">0</p>
+              <span class="stat-trend">—</span>
             </div>
+
             <div class="stat-card">
-              <span class="stat-label">Expected Revenue</span>
-              <p class="stat-value" id="expectedRevenue">$0.00</p>
+              <div class="stat-header">
+                <span class="stat-icon">💰</span>
+                <span class="stat-label">Expected Revenue</span>
+              </div>
+              <p class="stat-value" id="expectedRevenue">GH₵0.00</p>
+              <span class="stat-trend">—</span>
             </div>
+
             <div class="stat-card">
-              <span class="stat-label">Paid Revenue</span>
-              <p class="stat-value" id="paidRevenue">$0.00</p>
+              <div class="stat-header">
+                <span class="stat-icon">✅</span>
+                <span class="stat-label">Paid Revenue</span>
+              </div>
+              <p class="stat-value" id="paidRevenue">GH₵0.00</p>
+              <span class="stat-trend">—</span>
             </div>
+
             <div class="stat-card">
-              <span class="stat-label">Active Products</span>
+              <div class="stat-header">
+                <span class="stat-icon">🛍️</span>
+                <span class="stat-label">Active Products</span>
+              </div>
               <p class="stat-value" id="activeProducts">0</p>
+              <span class="stat-trend">—</span>
             </div>
           </div>
 
           <div class="recent-activity">
-            <h2>Recent Orders</h2>
-            <div class="table-wrapper">
-              <div class="table-responsive">
-                <table id="recentOrdersTable">
+            <div class="section-header">
+              <h2>Recent Orders</h2>
+            </div>
+
+            <div class="table-container">
+              <div class="table-scroll">
+                <table class="data-table" id="recentOrdersTable">
                   <thead>
                     <tr>
                       <th>Order ID</th>
@@ -95,7 +169,11 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- Injected via JS -->
+                    <tr>
+                      <td colspan="5" class="table-loading">
+                        Loading orders...
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -104,63 +182,154 @@
         </section>
       </main>
     </div>
+    
+    <!-- Inquiry Detail Modal -->
+    <div id="inquiryModal" class="modal">
+      <div class="modal-backdrop"></div>
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h2>Customer Inquiry</h2>
+          <button class="modal-close" onclick="window.closeInquiryModal()">
+            ✕
+          </button>
+        </div>
 
-    <!-- Modals -->
-    <div id="productModal" class="modal">
-      <div class="modal-content">
-        <h2 id="modalTitle">Add New Product</h2>
-        <form id="productForm" class="auth-form">
-          <div class="form-group">
-            <label>Product Name</label>
-            <input
-              type="text"
-              id="prodName"
-              placeholder="e.g. Silk Glow Serum"
-              required
-            />
-          </div>
-          <div
-            style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem"
-          >
-            <div class="form-group">
-              <label>Category</label>
-              <select id="prodCategory" required>
-                <!-- Injected -->
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Price ($)</label>
+        <div class="modal-body" id="inquiryDetailsContent">
+          <!-- Injected by JS -->
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-outline" onclick="window.closeInquiryModal()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Modal -->
+    <div id="categoryModal" class="modal">
+      <div class="modal-backdrop"></div>
+      <div class="modal-dialog modal-sm">
+        <div class="modal-header">
+          <h2>Add Category</h2>
+          <button class="modal-close" onclick="window.closeCatModal()">
+            ✕
+          </button>
+        </div>
+
+        <form
+          id="categoryForm"
+          class="modal-form"
+          onsubmit="handleCategorySubmit(event)"
+        >
+          <div class="form-row">
+            <div class="form-group full">
+              <label>Category Name</label>
               <input
-                type="number"
-                id="prodPrice"
-                step="0.01"
-                value="25.00"
+                type="text"
+                id="catName"
+                placeholder="e.g. Wellness"
                 required
               />
             </div>
           </div>
-          <div class="form-group">
-            <label>Thumbnail URL</label>
-            <input type="text" id="prodImage" placeholder="https://..." />
+
+          <div class="form-row">
+            <div class="form-group full">
+              <label>Category Image</label>
+              <input type="file" id="catImageFile" accept="image/jpeg,image/png,image/webp" />
+              <div id="catImagePreview" style="margin-top: 10px; width: 80px; height: 80px; background: #eee; border-radius: 8px; overflow: hidden; display: none;"></div>
+            </div>
           </div>
-          <div style="display: flex; gap: 1rem; margin-top: 2rem">
+
+          <div class="form-actions">
             <button
               type="button"
-              class="btn btn-outline btn-full"
-              onclick="window.closeModal()"
+              class="btn btn-outline"
+              onclick="window.closeCatModal()"
             >
               Cancel
             </button>
-            <button type="submit" class="btn btn-primary btn-full">
-              Save Product
-            </button>
+            <button type="submit" class="btn btn-primary">Save Category</button>
           </div>
         </form>
       </div>
     </div>
 
-    <script src="/js/components/navbar.js"></script>
-    <!-- To keep logic for auth if needed -->
-    <script type="module" src="/admin/admin-logic.js"></script>
+    <!-- Order Detail Modal -->
+    <div id="orderModal" class="modal">
+      <div class="modal-backdrop"></div>
+      <div class="modal-dialog">
+        <div class="modal-header">
+          <h2 id="orderModalTitle">Order Details</h2>
+          <button class="modal-close" onclick="window.closeOrderModal()">
+            ✕
+          </button>
+        </div>
+
+        <div class="modal-body" id="orderDetailsContent">
+          <!-- Injected by JS -->
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-outline" onclick="window.closeOrderModal()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tag Modal -->
+    <div id="tagModal" class="modal">
+      <div class="modal-backdrop"></div>
+      <div class="modal-dialog modal-sm">
+        <div class="modal-header">
+          <h2 id="tagModalTitle">Add Tag</h2>
+          <button class="modal-close" onclick="window.closeTagModal()">
+            ✕
+          </button>
+        </div>
+
+        <form
+          id="tagForm"
+          class="modal-form"
+          onsubmit="handleTagSubmit(event)"
+        >
+          <div class="form-row">
+            <div class="form-group full">
+              <label>Tag Name</label>
+              <input
+                type="text"
+                id="tagName"
+                placeholder="e.g. Moisturizer"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full">
+              <label>Affiliated Categories</label>
+              <div id="tagCategoryCheckboxes" class="checkbox-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; max-height: 150px; overflow-y: auto;">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button
+              type="button"
+              class="btn btn-outline"
+              onclick="window.closeTagModal()"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary" id="saveTagBtn">Save Tag</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="/admin/admin-logic.js?v=0.1.3"></script>
   </body>
 </html>

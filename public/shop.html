@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Shop our curated collection of skincare — Shine On Cosmetics"
+    />
+    <title>Shop - Shine On Cosmetics</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/shop.css" />
+  </head>
+  <body>
+    <!-- ════════ NAVBAR ════════ -->
+    <div
+      id="navbar-placeholder"
+      data-hero-mode="false"
+      data-hide-on-scroll="true"
+      data-active="shop"
+    ></div>
+
+    <!-- ════════ MAIN ════════ -->
+    <main>
+      <div class="shop-body container">
+        <div class="sidebar-scrim" id="sidebarScrim"></div>
+        <div class="shop-layout">
+          <aside class="shop-sidebar" id="shopSidebar">
+            <div class="sidebar-top">
+              <span class="sidebar-title">Filters</span>
+              <button
+                class="sidebar-close"
+                id="closeSidebar"
+                aria-label="Close"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="filter-group">
+              <p class="filter-label">Categories</p>
+              <ul class="filter-list">
+                <li class="filter-item active" data-category="all">
+                  <span>All Products</span> <span class="filter-count" id="count-all"></span>
+                </li>
+                <li class="filter-item" data-category="Face">
+                  <span>Face</span> <span><span class="filter-count" id="count-Face"></span> <i class="fas fa-times filter-x"></i></span>
+                </li>
+                <li class="filter-item" data-category="Skin">
+                  <span>Skin</span> <span><span class="filter-count" id="count-Skin"></span> <i class="fas fa-times filter-x"></i></span>
+                </li>
+                <li class="filter-item" data-category="Hair">
+                  <span>Hair</span> <span><span class="filter-count" id="count-Hair"></span> <i class="fas fa-times filter-x"></i></span>
+                </li>
+              </ul>
+            </div>
+            <div class="filter-group" id="tagFilterGroup" style="display: none">
+              <p class="filter-label">Filter by Type</p>
+              <ul class="filter-list" id="tagFilterList">
+                <!-- Dynamically populated -->
+              </ul>
+            </div>
+            <div class="filter-group">
+              <p class="filter-label">Gender</p>
+              <ul class="filter-list">
+                <li class="filter-item-gender active" data-gender="all">All</li>
+                <li class="filter-item-gender" data-gender="Female">Female</li>
+                <li class="filter-item-gender" data-gender="Male">Male</li>
+                <li class="filter-item-gender" data-gender="Unisex">Unisex</li>
+              </ul>
+            </div>
+            <div class="filter-group">
+              <p class="filter-label">Price Range</p>
+              <div class="price-inputs">
+                <input
+                  type="number"
+                  id="minPrice"
+                  placeholder="Min GH₵"
+                  min="0"
+                />
+                <span class="price-sep">—</span>
+                <input
+                  type="number"
+                  id="maxPrice"
+                  placeholder="Max GH₵"
+                  min="0"
+                />
+              </div>
+              <button class="apply-price-btn" id="applyPriceFilter">
+                Apply Range
+              </button>
+            </div>
+            <!-- <div class="filter-group">
+              <p class="filter-label">Availability</p>
+              <label class="toggle-label">
+                <input type="checkbox" id="inStockOnly" />
+                <span class="toggle-track"
+                  ><span class="toggle-thumb"></span
+                ></span>
+                In Stock Only
+              </label>
+            </div> -->
+            <button class="clear-filters-btn" id="clearFilters">
+              <i class="fas fa-rotate-left"></i> Clear All Filters
+            </button>
+          </aside>
+
+          <div class="shop-content">
+            <div class="controls-bar" id="controlsBar">
+              <div class="controls-inner">
+                <div class="search-wrap">
+                  <i class="fas fa-search search-icon"></i>
+                  <input
+                    type="text"
+                    id="productSearch"
+                    placeholder="Search products…"
+                    autocomplete="off"
+                  />
+                  <button
+                    class="search-clear"
+                    id="searchClear"
+                    aria-label="Clear"
+                  >
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+                <div class="controls-right">
+                  <button class="filter-toggle-btn" id="filterToggleBtn">
+                    <i class="fas fa-sliders-h"></i> <span>Filters</span>
+                    <span
+                      class="filter-badge"
+                      id="filterBadge"
+                      style="display: none"
+                      >0</span
+                    >
+                  </button>
+                  <div class="sort-wrap">
+                    <select id="sortSelect" aria-label="Sort">
+                      <option value="featured">Featured</option>
+                      <option value="price-low">Price ↑</option>
+                      <option value="price-high">Price ↓</option>
+                      <option value="name">A → Z</option>
+                    </select>
+                    <i class="fas fa-chevron-down sort-arrow"></i>
+                  </div>
+                </div>
+              </div>
+              <div class="active-chips" id="activeChips"></div>
+            </div>
+
+            <div
+              class="page-indicator"
+              id="pageIndicator"
+              style="display: none"
+            ></div>
+            <div class="shop-grid" id="shopGrid"></div>
+            <div class="no-results" id="noResults" style="display: none">
+              <div class="no-results-inner">
+                <span class="no-results-icon">🌿</span>
+                <h3>Nothing here yet</h3>
+                <p>Try adjusting your search or filters.</p>
+                <button class="reset-btn" id="noResultsReset">
+                  Clear Filters
+                </button>
+              </div>
+            </div>
+            <div class="pagination" id="pagination"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ════════ FABs ════════ -->
+    <button class="shop-fab-side" id="filterFab" title="Open Filters">
+      <i class="fas fa-sliders-h"></i>
+      <span class="shop-fab-badge" id="filterBadgeFab" style="display: none"
+        >0</span
+      >
+    </button>
+
+    <div class="shop-fab-group" id="fabGroup">
+      <button class="shop-fab shop-fab-cart" id="fabCart" title="View Cart">
+        <i class="fas fa-cart-shopping"></i>
+        <span class="shop-fab-count" id="fabCartCount" style="display: none"
+          >0</span
+        >
+      </button>
+      <button class="shop-fab shop-fab-top" id="fabTop" title="Back to top">
+        <i class="fas fa-arrow-up"></i>
+      </button>
+    </div>
+
+    <!-- ════════ TOAST ════════ -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ════════ FOOTER ════════ -->
+    <div id="footer-placeholder"></div>
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js?v=0.1.4"></script>
+    <script type="module" src="js/shop-logic.js"></script>
+  </body>
+</html>

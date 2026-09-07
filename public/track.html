@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Track Your Order - Shine On Cosmetics</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/pages-common.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
+    />
+    <style>
+      .tracking-container {
+        max-width: 600px;
+        margin: 4rem auto;
+        padding: 0 1.5rem;
+      }
+      .track-card {
+        background: white;
+        padding: 3rem;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-premium);
+      }
+      .status-banner {
+        background: var(--bg-soft);
+        padding: 2rem;
+        border-radius: var(--radius-sm);
+        text-align: center;
+        margin-bottom: 2.5rem;
+      }
+      .status-badge {
+        display: inline-block;
+        padding: 0.5rem 1.5rem;
+        border-radius: 100px;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 1px;
+        margin-top: 1rem;
+      }
+      .status-pending { background: #fff4e5; color: #b45d03; }
+      .status-confirmed { background: #edf7ed; color: #1e4620; }
+      .status-shipped { background: #e0f2fe; color: #0369a1; }
+      .status-delivered { background: #f0fdf4; color: #166534; }
+      
+      .order-item-mini {
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .order-item-mini img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container tracking-container">
+      <div class="track-card fade-in">
+        <h1 class="hero-title" style="font-size: 2.5rem; margin-bottom: 1rem">Track Order</h1>
+        <p style="margin-bottom: 3rem; color: var(--text-muted)">Enter your order details below to see its status.</p>
+
+        <form id="trackForm" style="display: grid; gap: 1.5rem">
+          <div class="form-group">
+            <label for="orderNumber">Order Number</label>
+            <input type="text" id="orderNumber" placeholder="e.g. SO-20250101-1234" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Email used for order" required />
+          </div>
+          <button type="submit" class="btn btn-primary btn-full" id="trackBtn">
+            Find My Order
+          </button>
+        </form>
+
+        <div id="trackResult" class="hidden" style="margin-top: 3rem">
+            <div class="status-banner">
+                <div id="statusIcon" style="font-size: 3rem; margin-bottom: 1rem">📦</div>
+                <h2 id="statusMessage">Order Found</h2>
+                <div id="statusBadge" class="status-badge status-pending">Pending</div>
+            </div>
+
+            <div class="details-section">
+                <h3 style="margin-bottom: 1.5rem; font-family: var(--font-heading)">Order Summary</h3>
+                <div id="orderItems"></div>
+                
+                <div style="margin-top: 2rem; display: grid; gap: 1rem">
+                    <div style="display: flex; justify-content: space-between">
+                        <span style="color: var(--text-muted)">Location</span>
+                        <span id="displayLocation" style="font-weight: 600">---</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between">
+                        <span style="color: var(--text-muted)">Total Paid</span>
+                        <span id="displayTotal" style="font-weight: 600; color: var(--coffee)">GH₵0.00</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-outline btn-full" style="margin-top: 3rem" onclick="location.reload()">Track Another</button>
+        </div>
+      </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js?v=0.1.5"></script>
+    <script type="module" src="js/track.js"></script>
+  </body>
+</html>

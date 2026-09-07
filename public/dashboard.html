@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Your personal dashboard" />
+    <title>Dashboard - Shine On Cosmetics</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/pages-common.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
+    />
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container dashboard-page">
+      <header class="profile-header">
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar" id="userAvatar">
+            <!-- Initial or Image -->
+          </div>
+          <button class="edit-avatar-btn" aria-label="Edit Profile">
+            <i class="fas fa-camera"></i>
+          </button>
+        </div>
+
+        <div class="profile-info">
+          <span class="member-tag">Loyal Member</span>
+          <h1 id="userName">User Name</h1>
+          <p id="userEmail" class="profile-email">user@email.com</p>
+          <div class="profile-meta">
+            <span
+              ><i class="fas fa-calendar-alt"></i> Joined
+              <span id="joinDate">Month Year</span></span
+            >
+            <span
+              ><i class="fas fa-cart-shopping"></i>
+              <span id="orderCount">0</span> Orders</span
+            >
+          </div>
+        </div>
+
+        <div class="dashboard-tabs">
+          <span class="tab-link active" data-tab="favorites">Wishlist</span>
+          <span class="tab-link" data-tab="orders">Orders</span>
+          <span class="tab-link" data-tab="settings">Settings</span>
+        </div>
+      </header>
+
+      <section id="favoritesTab" class="dashboard-content">
+        <div class="product-grid" id="wishlistGrid">
+          <!-- Favorites injected -->
+        </div>
+        <div
+          class="empty-state"
+          id="emptyWishlist"
+          style="display: none; text-align: center; padding: 4rem 2rem"
+        >
+          <div class="empty-icon"><i class="far fa-heart"></i></div>
+          <h3>Your wishlist is empty</h3>
+          <p>Save your favorite glow essentials for later.</p>
+          <a href="shop.html" class="btn btn-primary btn-round">Go to Shop</a>
+        </div>
+      </section>
+
+      <section id="ordersTab" class="dashboard-content" style="display: none">
+        <div id="ordersList" class="orders-list">
+          <!-- Orders injected -->
+        </div>
+        <div
+          class="empty-state"
+          id="emptyOrders"
+          style="display: none; text-align: center; padding: 4rem 2rem"
+        >
+          <div class="empty-icon"><i class="fas fa-box-open"></i></div>
+          <h3>No orders yet</h3>
+          <p>Once you make a purchase, your orders will appear here.</p>
+          <a href="shop.html" class="btn btn-primary btn-round"
+            >Start Shopping</a
+          >
+        </div>
+      </section>
+
+      <section id="settingsTab" class="dashboard-content" style="display: none">
+        <div class="settings-grid">
+          <div class="settings-card">
+            <h3>Profile Settings</h3>
+            <form id="profileSettingsForm">
+              <div class="form-group-light">
+                <label>Display Name</label>
+                <input type="text" id="settingsName" placeholder="Your Name" />
+              </div>
+              <div class="form-group-light">
+                <label>Email Address</label>
+                <input type="email" id="settingsEmail" disabled />
+              </div>
+              <button type="submit" class="btn btn-primary btn-full btn-round">
+                Update Profile
+              </button>
+            </form>
+          </div>
+
+          <div class="settings-card logout-card">
+            <h3>Account Actions</h3>
+            <p>Ready to leave? We'll miss your glow!</p>
+            <button class="btn btn-outline btn-full btn-round" id="logoutBtn" style="margin-bottom: 1rem;">
+              Sign Out
+            </button>
+            <div id="adminActionSection" style="display: none; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem; margin-top: 0.5rem;">
+               <p style="font-size: 0.85rem; margin-bottom: 1rem; color: var(--text-secondary);">You have administrative access.</p>
+               <a href="admin/index.html" class="btn btn-primary btn-full btn-round">Admin Dashboard</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <style>
+      :root {
+        --color-sage: #a8bf96;
+      }
+
+      .profile-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      .profile-avatar-wrap {
+        position: relative;
+        margin-bottom: 2rem;
+      }
+
+      .profile-avatar {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        background: var(--color-milk);
+        border: 4px solid white;
+        box-shadow: var(--shadow-premium);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        font-family: var(--font-heading);
+        color: var(--color-caramel);
+        text-transform: uppercase;
+        overflow: hidden;
+      }
+
+      .profile-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .edit-avatar-btn {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: var(--color-caramel);
+        color: white;
+        border: 3px solid white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+
+      .edit-avatar-btn:hover {
+        transform: scale(1.1);
+      }
+
+      .profile-info h1 {
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .member-tag {
+        display: inline-block;
+        padding: 0.3rem 1rem;
+        background: rgba(184, 134, 95, 0.1);
+        color: var(--color-caramel);
+        border-radius: 100px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 1rem;
+      }
+
+      .profile-email {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .profile-meta {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+      }
+
+      .profile-meta i {
+        color: var(--color-caramel);
+        margin-right: 0.5rem;
+      }
+
+      .empty-icon {
+        font-size: 4rem;
+        color: var(--color-milk);
+        margin-bottom: 1.5rem;
+      }
+
+      .settings-grid {
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 2rem;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      .settings-card {
+        background: white;
+        padding: 2.5rem;
+        border-radius: var(--radius-xl);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .settings-card h3 {
+        margin-bottom: 2rem;
+        font-family: var(--font-heading);
+      }
+
+      .form-group-light {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group-light label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+      }
+
+      .form-group-light input {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        background: var(--color-white);
+        border-radius: var(--radius-md);
+        font-size: 1rem;
+      }
+
+      .form-group-light input:disabled {
+        background: var(--color-milk);
+        cursor: not-allowed;
+      }
+
+      .logout-card {
+        background: var(--color-milk);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .orders-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .order-card {
+        background: white;
+        padding: 2rem;
+        border-radius: var(--radius-lg);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: var(--shadow-soft);
+      }
+
+      .order-main h4 {
+        margin-bottom: 0.5rem;
+      }
+
+      .order-status {
+        padding: 0.2rem 0.8rem;
+        border-radius: 100px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .status-processing {
+        background: #fff3cd;
+        color: #856404;
+      }
+      .status-delivered {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      @media (max-width: 768px) {
+        .settings-grid {
+          grid-template-columns: 1fr;
+        }
+        .profile-avatar {
+          width: 110px;
+          height: 110px;
+          font-size: 2.5rem;
+        }
+      }
+    </style>
+
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js?v=0.1.4"></script>
+    <script type="module">
+      import { auth, db } from "./js/firebase-config.js";
+      import {
+        onAuthStateChanged,
+        signOut,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+      import {
+        doc,
+        getDoc,
+        collection,
+        getDocs,
+        query,
+        where,
+        orderBy,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+      import { products } from "./js/products-data.js";
+
+      // Check Auth
+      onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+          localStorage.removeItem("user");
+          window.location.href = "auth.html";
+          return;
+        }
+
+        // Sync for navbar/footer non-module scripts
+        const userData = {
+          uid: user.uid,
+          email: user.email,
+          name: user.displayName || user.email.split("@")[0],
+        };
+        localStorage.setItem("user", JSON.stringify(userData));
+        if (window.updateAuthUI) window.updateAuthUI();
+        if (window.updateFooterAuthUI) window.updateFooterAuthUI();
+
+        // Update basic UI from auth
+        document.getElementById("userName").textContent =
+          user.displayName || "Glow Enthusiast";
+        document.getElementById("userEmail").textContent = user.email;
+        document.getElementById("settingsName").value = user.displayName || "";
+        document.getElementById("settingsEmail").value = user.email;
+
+        // Avatar Initial
+        const initial = (user.displayName || user.email)
+          .charAt(0)
+          .toUpperCase();
+        document.getElementById("userAvatar").textContent = initial;
+
+        // Fetch Firestore Profile
+        try {
+          const userDoc = await getDoc(doc(db, "users", user.uid));
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+
+            // Show Admin Section if role is admin
+            if (userData.role === 'admin') {
+              document.getElementById('adminActionSection').style.display = 'block';
+            }
+
+            // Join Date
+            if (userData.createdAt) {
+              const date = new Date(userData.createdAt);
+              document.getElementById("joinDate").textContent =
+                date.toLocaleDateString("en-US", {
+                  month: "long",
+                  year: "numeric",
+                });
+            }
+
+            // Load Favorites
+            loadFavorites(userData.favorites || []);
+
+            // Sync to local storage for the rest of the app
+            if (userData.favorites) {
+              const fullWishlist = products.filter((p) =>
+                userData.favorites.includes(p.id),
+              );
+              localStorage.setItem("wishlist", JSON.stringify(fullWishlist));
+            }
+            if (userData.cart) {
+              localStorage.setItem("cart", JSON.stringify(userData.cart));
+              if (window.updateCartDisplay) window.updateCartDisplay();
+            }
+
+            // Load Orders
+            loadOrders(user.uid);
+          }
+        } catch (err) {
+          console.error("Error fetching profile:", err);
+        }
+      });
+
+      function loadFavorites(favoriteIds) {
+        const grid = document.getElementById("wishlistGrid");
+        const emptyState = document.getElementById("emptyWishlist");
+
+        if (favoriteIds.length === 0) {
+          grid.style.display = "none";
+          emptyState.style.display = "block";
+          return;
+        }
+
+        grid.style.display = "grid";
+        emptyState.style.display = "none";
+
+        // Filter products that are in the favorites array
+        const favoriteProducts = products.filter((p) =>
+          favoriteIds.includes(p.id),
+        );
+
+        grid.innerHTML = favoriteProducts
+          .map(
+            (product, index) => `
+          <div class="product-card" style="animation-delay: ${index * 0.1}s" onclick="location.href='product.html?id=${product.id}'">
+            <div class="card-img">
+              <img src="${product.image}" alt="${product.name}" loading="lazy">
+            </div>
+            <div class="product-info-minimal">
+              <span class="category-tag">${product.category}</span>
+              <h3>${product.name}</h3>
+              <p class="price">$${product.price}</p>
+            </div>
+          </div>
+        `,
+          )
+          .join("");
+      }
+
+      async function loadOrders(uid) {
+        const ordersList = document.getElementById("ordersList");
+        const emptyState = document.getElementById("emptyOrders");
+        const countDisplay = document.getElementById("orderCount");
+
+        if (!ordersList || !emptyState) return;
+
+        try {
+          const ordersRef = collection(db, "orders");
+          const q = query(ordersRef, where("userId", "==", uid), orderBy("createdAt", "desc"));
+          const querySnapshot = await getDocs(q);
+
+          if (countDisplay) countDisplay.textContent = querySnapshot.size;
+
+          if (querySnapshot.empty) {
+            ordersList.style.display = "none";
+            emptyState.style.display = "block";
+            return;
+          }
+
+          ordersList.style.display = "flex";
+          emptyState.style.display = "none";
+
+          ordersList.innerHTML = querySnapshot.docs
+            .map((doc) => {
+              const o = doc.data();
+              const date = o.createdAt ? (o.createdAt.seconds ? new Date(o.createdAt.seconds * 1000) : new Date(o.createdAt)) : new Date();
+              const formattedDate = date.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
+              
+              const status = (o.status || "pending").toLowerCase();
+              const firstItem = (o.items && o.items.length > 0) ? o.items[0] : null;
+              const itemCount = o.items ? o.items.length : 0;
+              
+              return `
+                <div class="order-card" style="cursor: pointer;" onclick="location.href='track.html?order=${o.orderNumber}&email=${o.customer?.email || ''}'">
+                  <div style="display:flex; gap:1.5rem; align-items:center;">
+                    <div class="order-thumb" style="width:60px; height:60px; background:var(--color-milk); border-radius:8px; overflow:hidden; border:1px solid rgba(0,0,0,0.05)">
+                       ${firstItem ? `<img src="${firstItem.image}" alt="" style="width:100%; height:100%; object-fit:cover">` : '<i class="fas fa-box" style="display:flex; align-items:center; justify-content:center; height:100%; color:var(--color-caramel); opacity:0.5"></i>'}
+                    </div>
+                    <div class="order-main">
+                      <h4 style="font-family:var(--font-heading); font-size:1.1rem; color:var(--color-coffee)">#${o.orderNumber || doc.id.slice(-8).toUpperCase()}</h4>
+                      <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top:0.25rem">${formattedDate} • ${itemCount} ${itemCount === 1 ? 'item' : 'items'}</p>
+                    </div>
+                  </div>
+                  <div class="order-right" style="text-align: right">
+                    <p style="font-weight: 700; margin-bottom: 0.5rem; color:var(--color-coffee)">GH₵${(o.totalAmount || 0).toFixed(2)}</p>
+                    <span class="order-status status-${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>
+                  </div>
+                </div>
+              `;
+            })
+            .join("");
+        } catch (err) {
+          console.error("Error loading orders:", err);
+          if (ordersList) ordersList.innerHTML = `<p style="text-align:center; padding:2rem; color:var(--color-caramel)">Sign in to view your orders.</p>`;
+        }
+      }
+
+
+      // Tab switching
+      document.querySelectorAll(".tab-link").forEach((tab) => {
+        tab.addEventListener("click", () => {
+          document
+            .querySelectorAll(".tab-link")
+            .forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+
+          document.querySelectorAll(".dashboard-content").forEach((content) => {
+            content.style.display = "none";
+          });
+
+          const tabName = tab.dataset.tab;
+          document.getElementById(`${tabName}Tab`).style.display = "block";
+        });
+      });
+
+      // Logout
+      document.getElementById("logoutBtn").addEventListener("click", () => {
+        signOut(auth)
+          .then(() => {
+            localStorage.removeItem("user");
+            window.location.href = "auth.html";
+          })
+          .catch((error) => {
+            console.error("Logout Error:", error);
+          });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Product details for premium editorial beauty products"
+    />
+    <title>Product Details - Shine On Cosmetics</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/product.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
+    />
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container product-detail-page">
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="shop.html">Shop</a>
+        <span>/</span>
+        <span id="breadcrumbProduct">Product</span>
+      </div>
+
+      <div id="productContent">
+        <!-- Loading Skeleton -->
+        <div class="product-detail-grid product-loading">
+          <div class="product-images">
+            <div
+              class="product-main-img skeleton"
+              style="
+                aspect-ratio: 1;
+                width: 100%;
+                border-radius: var(--radius-lg);
+              "
+            ></div>
+            <div class="product-thumbnails">
+              <div
+                class="thumbnail skeleton"
+                style="
+                  height: 80px;
+                  width: 80px;
+                  border-radius: var(--radius-md);
+                "
+              ></div>
+              <div
+                class="thumbnail skeleton"
+                style="
+                  height: 80px;
+                  width: 80px;
+                  border-radius: var(--radius-md);
+                "
+              ></div>
+              <div
+                class="thumbnail skeleton"
+                style="
+                  height: 80px;
+                  width: 80px;
+                  border-radius: var(--radius-md);
+                "
+              ></div>
+              <div
+                class="thumbnail skeleton"
+                style="
+                  height: 80px;
+                  width: 80px;
+                  border-radius: var(--radius-md);
+                "
+              ></div>
+            </div>
+          </div>
+
+          <div class="product-info-panel">
+            <div
+              class="skeleton"
+              style="
+                height: 48px;
+                width: 85%;
+                margin-bottom: 24px;
+                border-radius: var(--radius-sm);
+              "
+            ></div>
+            <div
+              class="skeleton"
+              style="
+                height: 20px;
+                width: 40%;
+                margin-bottom: 32px;
+                border-radius: var(--radius-sm);
+              "
+            ></div>
+
+            <div
+              class="skeleton"
+              style="
+                height: 32px;
+                width: 30%;
+                margin-bottom: 40px;
+                border-radius: var(--radius-sm);
+              "
+            ></div>
+
+            <div style="display: flex; gap: 1rem; margin-bottom: 40px">
+              <div
+                class="skeleton"
+                style="height: 56px; width: 150px; border-radius: 100px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 56px; flex: 1; border-radius: 100px"
+              ></div>
+              <div
+                class="skeleton"
+                style="height: 56px; width: 56px; border-radius: 50%"
+              ></div>
+            </div>
+
+            <div class="product-description-section">
+              <div
+                class="skeleton"
+                style="
+                  height: 16px;
+                  width: 100%;
+                  margin-bottom: 12px;
+                  border-radius: var(--radius-sm);
+                "
+              ></div>
+              <div
+                class="skeleton"
+                style="
+                  height: 16px;
+                  width: 95%;
+                  margin-bottom: 12px;
+                  border-radius: var(--radius-sm);
+                "
+              ></div>
+              <div
+                class="skeleton"
+                style="
+                  height: 16px;
+                  width: 90%;
+                  margin-bottom: 12px;
+                  border-radius: var(--radius-sm);
+                "
+              ></div>
+              <div
+                class="skeleton"
+                style="
+                  height: 16px;
+                  width: 60%;
+                  border-radius: var(--radius-sm);
+                "
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="back-to-shop-wrapper">
+        <a href="shop.html" class="back-to-shop-link">
+          <i class="fas fa-arrow-left"></i> Back to Shop Collection
+        </a>
+      </div>
+
+      <section class="related-products">
+        <h2 class="section-title">You May Also Love</h2>
+        <div class="product-grid" id="relatedProducts">
+          <!-- Injected via JS -->
+        </div>
+
+        <div class="related-footer-nav">
+          <a href="shop.html" class="btn btn-outline back-to-shop-btn">
+            <i class="fas fa-arrow-left"></i> Back to Shop
+          </a>
+          <button
+            id="backToTopBtn"
+            class="btn-icon back-to-top-btn"
+            title="Back to Top"
+          >
+            <i class="fas fa-arrow-up"></i>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Floating Product CTA (Mobile Optimized) -->
+    <div class="product-floating-cta" id="floatingCTA">
+      <div class="floating-cta-container">
+        <button class="floating-icon-btn share" id="shareBtn" title="Share">
+          <i class="fas fa-share-alt"></i>
+        </button>
+        <button class="btn btn-primary floating-add-btn" id="floatingAddToCart">
+          Add to Cart
+        </button>
+        <button
+          class="floating-icon-btn favorite"
+          id="floatingFavorite"
+          title="Favorite"
+        >
+          <i class="far fa-heart"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Image Focus Modal (Lightbox) -->
+    <div class="image-focus-modal" id="imageModal">
+      <button class="close-modal" id="closeModal">&times;</button>
+      <div class="modal-content">
+        <div class="image-track" id="modalImageTrack">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+      <div class="modal-nav" id="modalNav">
+        <button class="modal-prev"><i class="fas fa-chevron-left"></i></button>
+        <div class="modal-counter" id="modalCounter">1 / 1</div>
+        <button class="modal-next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js?v=0.1.4"></script>
+    <script type="module" src="js/product-logic.js"></script>
+  </body>
+</html>

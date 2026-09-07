@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout - Shine On Cosmetics</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/pages-common.css" />
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
+    />
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container checkout-page">
+      <h1 class="cart-title fade-in">Finalize Your Order</h1>
+
+      <div class="cart-layout">
+        <form id="checkoutForm" class="checkout-form-section fade-in">
+          <div class="cart-card">
+            <h2 style="margin-bottom: 2rem">Delivery Information</h2>
+
+            <div style="display: grid; gap: 1.5rem; margin-bottom: 2rem">
+              <div class="form-group">
+                <label for="fullName">Full Name <span style="color: var(--color-error)">*</span></label>
+                <input
+                  type="text"
+                  id="fullName"
+                  name="fullName"
+                  placeholder="Enter your full name"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email Address <span style="color: var(--color-error)">*</span></label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                  title="Please enter a valid email address"
+                  required
+                />
+              </div>
+
+              <div
+                class="form-row"
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 1.5rem;
+                "
+              >
+                <div class="form-group">
+                  <label for="phone">Contact Number <span style="color: var(--color-error)">*</span></label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="Phone Number"
+                    pattern="^(\+233|0)\d{9}$"
+                    title="Please enter a valid 10-digit phone number (e.g., 0241234567)"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="location-select">Hostel / Location <span style="color: var(--color-error)">*</span></label>
+                  <select id="location-select" name="location-select" required>
+                    <option value="">Select your location</option>
+                    <optgroup label="KNUST Campus">
+                      <option value="knust:unity">Unity Hall (Conti)</option>
+                      <option value="knust:katanga">University Hall (Katanga)</option>
+                      <option value="knust:independence">Independence Hall</option>
+                      <option value="knust:republic">Republic Hall</option>
+                      <option value="knust:qeh">Queen Elizabeth Hall</option>
+                    </optgroup>
+                    <optgroup label="KATH Campus">
+                      <option value="kath:laing">Laing Hostel</option>
+                      <option value="kath:valco">Valco</option>
+                      <option value="kath:getfund">Getfund</option>
+                      <option value="kath:gold">Gold</option>
+                    </optgroup>
+                    <option value="other">Other (specify below)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="other-location-fields" style="display: none; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                <div class="form-group">
+                  <label for="city">City / Region <span style="color: var(--color-error)">*</span></label>
+                  <input
+                    type="text"
+                    id="city"
+                    name="city"
+                    placeholder="City"
+                  />
+                </div>
+                <div class="form-group">
+                  <label for="street">Street / Address <span style="color: var(--color-error)">*</span></label>
+                  <input
+                    type="text"
+                    id="street"
+                    name="street"
+                    placeholder="Street, Landmark"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group" id="address-group">
+                <label for="address">Room / House Number <span style="color: var(--color-error)">*</span></label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  placeholder="e.g. Room B212 or House 4"
+                  required
+                />
+              </div>
+            </div>
+
+            <h2 style="margin: 3rem 0 2rem">Payment Method</h2>
+            <div
+              class="payment-options"
+              style="grid-template-columns: 1fr; pointer-events: none"
+            >
+              <label class="payment-option active">
+                <input type="radio" name="payment" value="paystack" checked />
+                <div class="option-content">
+                  <span class="option-title">Card / MOMO</span>
+                  <p>Pay securely via Paystack</p>
+                </div>
+              </label>
+            </div>
+
+            <p class="terms-notice">
+              By placing this order, you agree to our Terms of Service and
+              Privacy Policy.
+            </p>
+          </div>
+        </form>
+
+        <aside class="cart-summary-box fade-in" id="orderSummary">
+          <!-- Summary injected via JS -->
+          <div class="summary-loading">
+            <div class="loading"></div>
+            <p>Preparing your summary...</p>
+          </div>
+        </aside>
+      </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js?v=0.1.4"></script>
+    <script type="module" src="js/payment.js"></script>
+  </body>
+</html>

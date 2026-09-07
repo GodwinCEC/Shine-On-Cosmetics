@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Confirmed - Shine On Cosmetics</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/pages-common.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
+    />
+    <style>
+      .success-hero {
+        padding: 6rem 2rem;
+        text-align: center;
+        background: var(--bg-soft);
+        border-radius: var(--radius-lg);
+        margin: 2rem auto;
+        max-width: 800px;
+      }
+      .success-icon {
+        font-size: 5rem;
+        color: var(--color-sage);
+        margin-bottom: 2rem;
+        display: inline-block;
+        animation: scaleIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      @keyframes scaleIn {
+        from { transform: scale(0); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+      }
+      .order-card {
+        background: white;
+        padding: 3rem;
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-premium);
+        max-width: 600px;
+        margin: -4rem auto 4rem;
+        position: relative;
+        z-index: 10;
+      }
+      .order-number {
+        font-family: var(--font-heading);
+        font-size: 1.5rem;
+        color: var(--coffee);
+        letter-spacing: 2px;
+        margin: 1rem 0;
+      }
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .detail-label { color: var(--text-muted); }
+      .detail-value { font-weight: 600; color: var(--text-main); }
+      
+      .action-btns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-top: 3rem;
+      }
+      @media (max-width: 600px) {
+        .action-btns { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="container">
+      <section class="success-hero fade-in">
+        <div class="success-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h1 class="hero-title">Your Order is Placed.</h1>
+        <p>Thank you for choosing Shine On Cosmetics. We're preparing your glow.</p>
+      </section>
+
+      <div class="order-card fade-in" style="animation-delay: 0.2s">
+        <h2 style="text-align: center; margin-bottom: 2rem">Order Reference</h2>
+        
+        <div style="text-align: center; margin-bottom: 2rem">
+          <p class="detail-label">Your Order Number</p>
+          <div class="order-number" id="orderNumber">---</div>
+          <button id="copyOrderBtn" class="btn btn-sm btn-outline" style="border-radius: 100px; padding: 0.5rem 1.5rem">
+            <i class="far fa-copy"></i> Copy ID
+          </button>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">Status</span>
+            <span class="detail-value" style="color: var(--color-sage)">Confirmed</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Payment</span>
+            <span class="detail-value" id="paymentStatus">Paid</span>
+        </div>
+        <div class="detail-row" style="border-bottom: none">
+            <span class="detail-label">Total Amount</span>
+            <span class="detail-value" id="orderTotal" style="font-size: 1.25rem; color: var(--coffee)">GH₵0.00</span>
+        </div>
+
+        <div class="action-btns">
+            <a href="shop.html" class="btn btn-outline btn-full">Continue Shopping</a>
+            <!-- <a href="track.html" class="btn btn-primary btn-full">Track My Order</a> -->
+        </div>
+      </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js?v=0.1.5"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const orderData = sessionStorage.getItem('lastOrder');
+            if (!orderData) {
+                window.location.href = 'shop.html';
+                return;
+            }
+
+            const order = JSON.parse(orderData);
+            document.getElementById('orderNumber').textContent = order.orderNumber;
+            document.getElementById('orderTotal').textContent = `GH₵${order.totalAmount.toFixed(2)}`;
+            document.getElementById('paymentStatus').textContent = order.paymentStatus === 'paid' ? 'Paid' : 'Pending';
+
+            // Copy ID
+            document.getElementById('copyOrderBtn').onclick = () => {
+                navigator.clipboard.writeText(order.orderNumber).then(() => {
+                    const btn = document.getElementById('copyOrderBtn');
+                    const original = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    setTimeout(() => btn.innerHTML = original, 2000);
+                });
+            };
+        });
+    </script>
+  </body>
+</html>

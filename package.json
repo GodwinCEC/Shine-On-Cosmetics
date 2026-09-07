@@ -1,0 +1,23 @@
+{
+  "name": "shine-on-cosmetics",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GodwinCEC/Shine-On-Cosmetics.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GodwinCEC/Shine-On-Cosmetics/issues"
+  },
+  "homepage": "https://github.com/GodwinCEC/Shine-On-Cosmetics#readme",
+  "dependencies": {
+    "firebase": "^10.7.1"
+  }
+}

@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td><img src="https://images.unsplash.com/photo-1601049541289-9b1b7bbbfe19?auto=format&fit=crop&q=80&w=50" alt="Product"></td>
                 <td>Glow Serum</td>
                 <td>Skincare</td>
-                <td>$45.00</td>
+                <td>GH₵45.00</td>
                 <td>20</td>
                 <td>
                     <button class="btn btn-sm">Edit</button>

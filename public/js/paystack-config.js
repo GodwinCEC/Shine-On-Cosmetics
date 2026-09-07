@@ -4,7 +4,7 @@
 const PAYSTACK_CONFIG = {
     // Determine which key to use based on the environment
     // For now, we default to the TEST key provided in .env
-    publicKey: 'pk_test_ebe3b01e1cfca721cb896e4e703c32b7b845e7b9',
+    publicKey: 'pk_live_6b7816da12c8a094f266cffe542fb3808c317c4c',
 
     // In a real production setup, you might use:
     // publicKey: window.location.hostname === 'localhost' ? 'TEST_KEY' : 'LIVE_KEY'

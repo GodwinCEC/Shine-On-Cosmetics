@@ -1,17 +1,22 @@
-// Firebase Configuration Placeholder
-// TODO: Replace with your actual Firebase project config
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
+    apiKey: "AIzaSyARUB5rHEw_pMrzH4kHFkcRIoCA7dTtmys",
     authDomain: "shine-on-cosmetics.firebaseapp.com",
     projectId: "shine-on-cosmetics",
-    storageBucket: "shine-on-cosmetics.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    storageBucket: "shine-on-cosmetics.firebasestorage.app",
+    messagingSenderId: "454736529998",
+    appId: "1:454736529998:web:65792f211c5750d7b1911f",
+    measurementId: "G-FZZDR5745L"
 };
 
 // Initialize Firebase
-// Note: In a production environment, you would include the Firebase scripts in your HTML
-// and then use firebase.initializeApp(firebaseConfig);
-// For this vanilla JS implementation, we'll assume the existence of the Firebase SDK.
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-export { firebaseConfig };
+export { auth, db, storage };

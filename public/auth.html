@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sign in to your Shine On account" />
+    <title>Sign In - Shine On Cosmetics</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/pages-common.css" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
+    />
+    <!-- Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+
+    <main class="auth-page">
+      <a href="index.html" class="floating-back-btn" aria-label="Back to Home">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="m15 18-6-6 6-6" />
+        </svg>
+      </a>
+      <div class="auth-overlay"></div>
+      <div class="auth-container">
+        <div class="auth-header-content">
+          <h1 class="auth-title">LOGIN</h1>
+          <p class="auth-subtitle">
+            Sign in to your account to continue shopping.
+          </p>
+        </div>
+
+        <form class="auth-form" id="authForm">
+          <div class="form-group-minimal" id="nameGroup" style="display: none">
+            <span class="input-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </span>
+            <input
+              type="text"
+              id="name"
+              placeholder="Full Name"
+              autocomplete="name"
+            />
+          </div>
+          <div class="form-group-minimal">
+            <span class="input-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                ></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </span>
+            <input
+              type="email"
+              id="email"
+              placeholder="Email Address"
+              required
+              autocomplete="email"
+            />
+          </div>
+          <div class="form-group-minimal">
+            <span class="input-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </span>
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              required
+              autocomplete="current-password"
+            />
+            <button
+              type="button"
+              class="toggle-password"
+              id="togglePasswordBtn"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+
+          <div class="form-actions-minimal">
+            <a href="#" id="forgotPasswordLink" class="forgot-link">Forgot your password?</a>
+          </div>
+
+          <button
+            type="submit"
+            id="submitBtn"
+            class="btn btn-primary btn-round btn-full"
+            style="margin-bottom: 1.25rem"
+          >
+            SIGN IN
+          </button>
+
+          <div style="text-align: center">
+            <a
+              href="#"
+              id="toggleSignup"
+              style="
+                color: rgba(255, 255, 255, 0.8);
+                font-size: 0.95rem;
+                transition: color 0.3s;
+              "
+              >Register</a
+            >
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/components/navbar.js"></script>
+    <script src="js/components/footer.js?v=0.1.4"></script>
+    <script type="module">
+      import { auth, db } from "./js/firebase-config.js?v=0.1.3";
+      import {
+        createUserWithEmailAndPassword,
+        signInWithEmailAndPassword,
+        updateProfile,
+        onAuthStateChanged,
+        sendPasswordResetEmail,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+      import {
+        doc,
+        setDoc,
+        getDoc,
+      } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+      let isSignUp = false;
+      let isProcessing = false;
+
+      // Handle Redirect Parameter
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectTarget = urlParams.get('redirect') || 'dashboard.html';
+
+      // Customize UI for checkout redirect
+      if (redirectTarget.includes('checkout')) {
+          const title = document.querySelector(".auth-title");
+          const subtitle = document.querySelector(".auth-subtitle");
+          if (title) title.textContent = "ALMOST THERE";
+          if (subtitle) subtitle.textContent = "Please sign in or register to complete your purchase.";
+      }
+
+      // Redirect if already logged in (only if not currently signing up/in)
+      async function checkInstantRedirect() {
+        await auth.authStateReady();
+        if (auth.currentUser && !isProcessing) {
+          window.location.href = redirectTarget;
+        }
+      }
+      checkInstantRedirect();
+
+      onAuthStateChanged(auth, (user) => {
+        if (user && !isProcessing) {
+          window.location.href = redirectTarget;
+        }
+      });
+
+      // Password Visibility Toggle
+      document
+        .getElementById("togglePasswordBtn")
+        .addEventListener("click", function () {
+          const passwordInput = document.getElementById("password");
+          const type =
+            passwordInput.getAttribute("type") === "password"
+              ? "text"
+              : "password";
+          passwordInput.setAttribute("type", type);
+
+          // Update icon (eye to eye-off)
+          this.innerHTML =
+            type === "password"
+              ? `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`
+              : `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+        });
+
+      const authForm = document.getElementById("authForm");
+      const title = document.querySelector(".auth-title");
+      const subtitle = document.querySelector(".auth-subtitle");
+      const submitBtn = document.getElementById("submitBtn");
+      const toggleSignup = document.getElementById("toggleSignup");
+      const nameGroup = document.getElementById("nameGroup");
+      const nameInput = document.getElementById("name");
+
+      toggleSignup.addEventListener("click", function (e) {
+        e.preventDefault();
+        isSignUp = !isSignUp;
+
+        if (isSignUp) {
+          title.textContent = "CREATE ACCOUNT";
+          subtitle.textContent =
+            "Signup to start shopping.";
+          submitBtn.textContent = "CREATE ACCOUNT";
+          toggleSignup.textContent = "Already have an account? Sign In";
+          nameGroup.style.display = "flex";
+          nameInput.required = true;
+        } else {
+          title.textContent = "LOGIN";
+          subtitle.textContent =
+            "Sign in to your account to continue shopping.";
+          submitBtn.textContent = "SIGN IN";
+          toggleSignup.textContent = "Register";
+          nameGroup.style.display = "none";
+          nameInput.required = false;
+        }
+      });
+      
+      document.getElementById("forgotPasswordLink").addEventListener("click", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        if (!email) {
+          showNotification("Please enter your email address first.", true);
+          return;
+        }
+        try {
+          await sendPasswordResetEmail(auth, email);
+          showNotification("Password reset email sent! 📩");
+        } catch (error) {
+          showNotification(error.message, true);
+        }
+      });
+
+      function showNotification(message, isError = false) {
+        const notification = document.createElement("div");
+        notification.textContent = message;
+        notification.style.cssText = `
+          position: fixed;
+          top: 100px;
+          right: 20px;
+          background: ${isError ? "#e74c3c" : "#A8BF96"};
+          color: white;
+          padding: 1rem 2rem;
+          border-radius: 100px;
+          font-family: var(--font-heading);
+          font-size: 0.9rem;
+          font-weight: 600;
+          box-shadow: var(--shadow-premium);
+          z-index: 10000;
+          animation: slideInRight 0.5s forwards;
+        `;
+        document.body.appendChild(notification);
+        setTimeout(() => notification.remove(), 3000);
+      }
+
+      authForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const name = nameInput.value;
+
+        isProcessing = true;
+        submitBtn.disabled = true;
+        submitBtn.textContent = isSignUp ? "CREATING..." : "SIGNING IN...";
+
+        try {
+          if (isSignUp) {
+            const userCredential = await createUserWithEmailAndPassword(
+              auth,
+              email,
+              password,
+            );
+            const user = userCredential.user;
+
+            await updateProfile(user, { displayName: name });
+
+            // Create user document in Firestore
+            await setDoc(doc(db, "users", user.uid), {
+              name: name,
+              email: email,
+              role: "user",
+              createdAt: new Date().toISOString(),
+              favorites: [],
+            });
+
+            showNotification("Account created! ✨");
+          } else {
+            await signInWithEmailAndPassword(auth, email, password);
+            showNotification("Welcome back! ✨");
+          }
+
+          setTimeout(() => {
+            window.location.href = redirectTarget;
+          }, 1500);
+        } catch (error) {
+          isProcessing = false;
+          console.error("Auth Error:", error);
+          showNotification(error.message, true);
+          submitBtn.disabled = false;
+          submitBtn.textContent = isSignUp ? "CREATE ACCOUNT" : "SIGN IN";
+        }
+      });
+
+    </script>
+  </body>
+</html>

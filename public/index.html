@@ -5,164 +5,328 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Shine On Cosmetics - Natural glow, editorial finish. Experience minimalist skincare and scent collection."
+      content="Shine On Cosmetics - Basic and Affordable care at your doorstep"
     />
-    <title>Shine On | Minimalist Editorial Beauty</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/index.css" />
+    <title>Shine On Cosmetics</title>
     <link
       rel="icon"
       href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/index.css" />
   </head>
   <body>
-    <div id="navbar-placeholder"></div>
+    <!-- ════════ NAVBAR ════════ -->
+    <div
+      id="navbar-placeholder"
+      data-hero-mode="true"
+      data-hide-on-scroll="false
+      data-active="home"
+    ></div>
 
     <main>
-      <!-- Hero Section -->
+      <!-- ════════ HERO ════════ -->
       <section class="hero">
-        <div class="container hero-container">
-          <div class="hero-content reveal">
-            <span class="section-tag">Welcome to Shine On</span>
-            <h1>Natural Glow.<br />Editorial Finish.</h1>
-            <p>
-              Experience the ultimate editorial beauty with our mindfully
-              formulated skincare and scent collection. Where botanical science
-              meets editorial aesthetics.
-            </p>
-            <div class="hero-actions">
-              <a href="/shop" class="btn btn-primary">Discover the Ritual</a>
-              <a href="/about" class="btn btn-outline">Our Philosophy</a>
-            </div>
-          </div>
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-gradient"></div>
 
-          <div class="hero-carousel-container reveal">
-            <div class="hero-queue" id="heroQueue">
-              <!-- Injected via JS -->
-            </div>
+        <div class="hero-content">
+          <span class="hero-eyebrow">Est. 2023 · Ghana</span>
+          <h1 class="hero-title">
+            Shine On<br />
+            <em>Cosmetics</em>
+          </h1>
+          <p class="hero-sub">Basic and affordable care at your doorstep.</p>
+          <div class="hero-cta">
+            <a href="shop.html" class="btn-primary"
+              >Shop Now <i class="fas fa-arrow-right"></i
+            ></a>
+            <a href="#mission" class="btn-ghost">Our Story</a>
           </div>
         </div>
-      </section>
+<!-- 
+        <div class="scroll-cue">
+          <span>Scroll</span>
+          <div class="scroll-cue-bar"></div>
+        </div> -->
 
-      <!-- Featured Products Section -->
-      <section class="featured-section">
-        <div class="container">
-          <div class="section-header">
-            <span class="section-tag">Luminous Selection</span>
-            <h2 class="section-title reveal">The Featured Ritual</h2>
-            <p class="section-subtitle reveal">
-              Our most beloved formulations, curated for your daily
-              transformation
-            </p>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="num">100%</div>
+            <div class="lbl">Natural</div>
           </div>
-        </div>
-
-        <div class="featured-ritual-slider" id="featuredProducts">
-          <!-- Injected via JS -->
-        </div>
-
-        <div class="container">
-          <div class="section-cta reveal">
-            <a href="/shop" class="btn btn-secondary"
-              >Explore Full Collection</a
-            >
+          <div class="hero-stat">
+            <div class="num">4.9★</div>
+            <div class="lbl">Rated</div>
+          </div>
+          <div class="hero-stat">
+            <div class="num">GH₵</div>
+            <div class="lbl">Affordable</div>
           </div>
         </div>
       </section>
 
-      <!-- Values Section -->
-      <section class="values-section reveal">
+      <!-- ════════ TICKER ════════ -->
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track" id="tickerTrack">
+          <!-- JS fills this -->
+        </div>
+      </div>
+
+      <!-- ════════ CATEGORIES ════════ -->
+      <section class="section section-white">
         <div class="container">
-          <div class="values-grid">
-            <div class="value-card reveal">
-              <div class="value-icon">🌿</div>
-              <h3>Botanical Science</h3>
+          <div class="reveal">
+            <div class="label-tag">Browse</div>
+            <h2 class="section-title">Shop by <em>Category</em></h2>
+          </div>
+          <div class="cats reveal">
+            <a href="shop.html" class="cat-card">
+              <img
+                src="assets/images/cat-all.jpg"
+                alt="Shop All"
+                loading="lazy"
+              />
+              <div class="cat-overlay"></div>
+              <div class="cat-info">
+                <span class="cat-name">Shop All</span>
+                <span class="cat-cta">Explore →</span>
+              </div>
+            </a>
+            <a href="shop.html?cat=Face" class="cat-card">
+              <img src="assets/images/cat_face.png" alt="Face" loading="lazy" />
+              <div class="cat-overlay"></div>
+              <div class="cat-info">
+                <span class="cat-name">Face</span>
+                <span class="cat-cta">Explore →</span>
+              </div>
+            </a>
+            <a href="shop.html?cat=Skin" class="cat-card">
+              <img src="assets/images/skin-category-model.jpg" alt="Skin" loading="lazy" />
+              <div class="cat-overlay"></div>
+              <div class="cat-info">
+                <span class="cat-name">Skin</span>
+                <span class="cat-cta">Explore →</span>
+              </div>
+            </a>
+            <a href="shop.html?cat=Hair" class="cat-card">
+              <img src="assets/images/cat_hair.png" alt="Hair" loading="lazy" />
+              <div class="cat-overlay"></div>
+              <div class="cat-info">
+                <span class="cat-name">Hair</span>
+                <span class="cat-cta">Explore →</span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ════════ FEATURED PRODUCTS ════════ -->
+      <section class="section section-milk">
+        <div class="container">
+          <div class="feat-header reveal">
+            <div>
+              <div class="label-tag">Curated picks</div>
+              <h2 class="section-title">Featured <em>Products</em></h2>
+            </div>
+            <a href="shop.html" class="view-all"
+              >View All <i class="fas fa-arrow-right"></i
+            ></a>
+          </div>
+          <div class="products-grid-wrapper">
+            <div class="products-grid reveal" id="productsGrid">
+              <!-- JS injects -->
+            </div>
+          </div>
+          <!-- Scroll indicators added by JS on mobile -->
+        </div>
+      </section>
+
+      <!-- ════════ MISSION / ABOUT CAROUSEL ════════ -->
+      <section class="section section-white" id="mission">
+        <div class="container">
+          <div class="mission-grid-wrapper reveal">
+            <div class="mission-grid reveal">
+              
+              <!-- Card 1: Founder -->
+              <div class="mission-card bg-image">
+                <div class="mission-image">
+                  <img
+                    src="assets/images/founder.webp"
+                    alt="Nana Akua Sasu - Founder"
+                    loading="lazy"
+                    onerror="this.src='assets/images/cat-all.jpg'"
+                  />
+                </div>
+                <div class="mission-content">
+                  <div class="label-tag">Founder</div>
+                  <h2><em>Nana Akua Sasu</em></h2>
+                  <p>
+                    Driven by a passion for accessible beauty, Nana Akua founded Shine On Cosmetics with a clear vision: to bring high-quality skincare to every doorstep, regardless of budget.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Card 2: Mission -->
+              <div class="mission-card featured">
+                <div class="mission-content">
+                  <div class="mission-icon">🌿</div>
+                  <div class="label-tag">Our Mission</div>
+                  <h2>Beauty with <em>Intention.</em></h2>
+                  <p>
+                    We started Shine On with one conviction: high-performance
+                    skincare should be within everyone's reach. No compromise. No
+                    luxury tax. Just pure, effective care — delivered to your door.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <!-- Scroll indicators added by JS -->
+        </div>
+      </section>
+
+      <!-- ════════ TESTIMONIALS ════════ -->
+      <section class="section section-milk">
+        <div class="container">
+          <div
+            class="reveal"
+            style="text-align: center; max-width: 600px; margin: 0 auto 0"
+          >
+            <div class="label-tag" style="justify-content: center">Reviews</div>
+            <h2 class="section-title">Our <em>Customers</em></h2>
+          </div>
+          <div class="reviews-grid-wrapper">
+            <div class="reviews-grid reveal">
+              <div class="review-card reveal">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">
+                  "I've shopped with Shine On before and I highly recommend them. 
+                  Their products are very affordable, yet you still get great quality and original items. 
+                  Truly a 5-star experience."
+                </p>
+                <div class="review-author">
+                  <div class="review-avatar">L</div>
+                  <div>
+                    <div class="review-name">Lawrencia Teyemor</div>
+                    <div class="review-role">Loyal Client</div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="review-card reveal"
+                style="transition-delay: 0.1s"
+              >
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">
+                  "The delivery and packaging for Shine On are laudable. 
+                  I received my items right at my doorstep within just 3 days of placing my order! 
+                  Everything came in a lovely bag, even though my purchase was small. 
+                  Keep up the excellent work! ✨"
+                </p>
+                <div class="review-author">
+                  <div class="review-avatar">F</div>
+                  <div>
+                    <div class="review-name">Frempong Priscilla</div>
+                    <div class="review-role">Verified Customer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="review-card reveal" style="transition-delay: 0.2s">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">
+                  "I have no regrets choosing Shine On Cosmetics. The service was incredibly fast and the entire process was seamless. If you're looking for efficiency and quality, this is it!"
+                </p>
+                <div class="review-author">
+                  <div class="review-avatar">M</div>
+                  <div>
+                    <div class="review-name">Marian Peprah-Nkrumah</div>
+                    <div class="review-role">Skincare Enthusiast</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="review-card reveal" style="transition-delay: 0.3s">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">
+                  "Legit 10/10 service. From the moment I placed the order to when it arrived, everything was spot on. I’m definitely coming back for my next restock!"
+                </p>
+                <div class="review-author">
+                  <div class="review-avatar">C</div>
+                  <div>
+                    <div class="review-name">Cyril D</div>
+                    <div class="review-role">Verified Buyer</div>
+                  </div>
+                </div>
+              </div>
+              <div class="review-card reveal" style="transition-delay: 0.4s">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">
+                  "Really good customer service here. They actually listen to you and make sure you’re happy with what you're getting. It's great to have a business you can actually trust."
+                </p>
+                <div class="review-author">
+                  <div class="review-avatar">M</div>
+                  <div>
+                    <div class="review-name">Mabel Manu</div>
+                    <div class="review-role">Community Member</div>
+                  </div>
+                </div>
+              </div>
+              <div class="review-card reveal" style="transition-delay: 0.5s">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-text">
+                  "Great service and the prices are actually affordable! It’s my first time buying from Shine On and I love how they handle the monthly orders. Quality stuff without breaking the bank."
+                </p>
+                <div class="review-author">
+                  <div class="review-avatar">E</div>
+                  <div>
+                    <div class="review-name">Eunice OA</div>
+                    <div class="review-role">Beauty Enthusiast</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Scroll indicators added by JS on mobile -->
+        </div>
+      </section>
+
+      <!-- ════════ CTA BAND ════════ -->
+      <section class="section section-cream">
+        <div class="container">
+          <div class="cta-band reveal">
+            <div class="cta-band-text">
+              <h2>Ready to Glow?</h2>
               <p>
-                Ethically sourced natural ingredients backed by modern skincare
-                science
+                Join thousands of happy customers and find your new skincare
+                ritual today.
               </p>
             </div>
-            <div class="value-card reveal">
-              <div class="value-icon">✨</div>
-              <h3>Editorial Quality</h3>
-              <p>
-                Professional-grade formulations worthy of the runway and red
-                carpet
-              </p>
-            </div>
-            <div class="value-card reveal">
-              <div class="value-icon">🤍</div>
-              <h3>Clean Beauty</h3>
-              <p>
-                Free from harmful chemicals, cruelty-free, and environmentally
-                conscious
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- About Snippet -->
-      <section class="about-snippet reveal">
-        <div class="about-content">
-          <span class="section-tag">The Philosophy</span>
-          <h2>Our Mission</h2>
-          <p>
-            We create mindfully formulated essentials for the modern ritual.
-            Every bottle is a promise of ethical ingredients and an editorial
-            glow. Beauty that's high-performing, high-fashion, and
-            high-standard.
-          </p>
-          <a href="/about" class="btn btn-outline">Discover Our Story</a>
-        </div>
-      </section>
-
-      <!-- Testimonials Section -->
-      <section class="testimonials-section container">
-        <span class="section-tag">Client Love</span>
-        <h2 class="section-title reveal">The Glow Effect</h2>
-        <div class="testimonials-grid">
-          <div class="testimonial-card reveal">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">
-              "The Luminous Dew Serum transformed my skin. I've never felt more
-              radiant and the glow is unreal!"
-            </p>
-            <div class="testimonial-author">
-              <strong>Sarah M.</strong>
-              <span>New York, NY</span>
-            </div>
-          </div>
-          <div class="testimonial-card reveal">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">
-              "Finally, a beauty brand that delivers on its promises. Clean
-              ingredients, luxurious feel, editorial results."
-            </p>
-            <div class="testimonial-author">
-              <strong>Jessica L.</strong>
-              <span>Los Angeles, CA</span>
-            </div>
-          </div>
-          <div class="testimonial-card reveal">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">
-              "The Essence Eau de Parfum is my signature scent now.
-              Sophisticated, unique, and lasts all day."
-            </p>
-            <div class="testimonial-author">
-              <strong>Amanda K.</strong>
-              <span>Miami, FL</span>
-            </div>
+            <a href="shop.html" class="btn-white"
+              >Shop Now <i class="fas fa-arrow-right"></i
+            ></a>
           </div>
         </div>
       </section>
     </main>
 
+    <!-- ════════ FOOTER ════════ -->
     <div id="footer-placeholder"></div>
 
+    <!-- <div class="toast" id="toast"></div> -->
     <script src="js/components/navbar.js"></script>
-    <script src="js/components/footer.js"></script>
-    <script type="module" src="js/main.js"></script>
+    <script src="js/components/footer.js?v=0.1.4"></script>
+    <script type="module" src="js/index.js"></script>
   </body>
 </html>

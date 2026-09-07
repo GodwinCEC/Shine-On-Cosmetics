@@ -1,143 +1,162 @@
 const navbarHTML = `
-<nav class="navbar">
-    <div class="container navbar-container">
-        <a href="/" class="logo">SHINE ON</a>
-        
-        <div class="nav-links" id="navLinks">
-            <a href="/" class="nav-link">Home</a>
-            <a href="/about" class="nav-link">About</a>
-            <a href="/shop" class="nav-link">Shop</a>
-            <div id="authPlace"></div>
-            <a href="/cart" class="nav-link cart-link">
-                Cart <span id="cartCount" style="display: none;">0</span>
-            </a>
-        </div>
-
-        <button class="hamburger" id="hamburger" aria-label="Toggle menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">Shine On</a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link" data-link="home">Home</a>
+      <a href="shop.html" class="nav-link" data-link="shop">Shop</a>
+      <a href="contact.html" class="nav-link" data-link="contact">Contact</a>
+      <span id="authPlaceDesktop" style="display: inline-flex; align-items: center;"></span>
+      <a href="cart.html" class="nav-link" data-link="cart">
+        <i class="fas fa-cart-shopping"></i>
+        Cart <span class="cart-count-bracket"></span>
+      </a>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-scrim" id="navScrim"></div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" class="nav-link" data-link="home">Home</a>
+    <a href="shop.html" class="nav-link" data-link="shop">Shop</a>
+    <a href="contact.html" class="nav-link" data-link="contact">Contact</a>
+    <a href="cart.html" class="nav-link" data-link="cart">
+      <i class="fas fa-cart-shopping"></i>
+      Cart <span class="cart-count-bracket"></span>
+    </a>
+    <div id="authPlaceMobile"></div>
+  </div>
 </nav>
 `;
 
 function initNavbar() {
-    const navbarPlaceholder = document.getElementById('navbar-placeholder');
-    if (!navbarPlaceholder) return;
+    const placeholder = document.getElementById('navbar-placeholder');
+    if (!placeholder) return;
 
-    navbarPlaceholder.innerHTML = navbarHTML;
+    // Get options from data attributes
+    const heroMode = placeholder.getAttribute('data-hero-mode') === 'true';
+    const hideOnScroll = placeholder.getAttribute('data-hide-on-scroll') === 'true';
+    const activeLink = placeholder.getAttribute('data-active');
 
+    placeholder.innerHTML = navbarHTML;
+
+    const navbar = document.getElementById('navbar');
     const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
-    const navbar = document.querySelector('.navbar');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navScrim = document.getElementById('navScrim');
 
-    // Mobile menu toggle
-    hamburger.addEventListener('click', () => {
-        const isActive = navLinks.classList.contains('active');
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
-        document.body.style.overflow = isActive ? '' : 'hidden';
-    });
-
-    // Close menu on link click
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = '';
-        });
-    });
-
-    // Close menu on escape key
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-            hamburger.classList.remove('active');
-            document.body.style.overflow = '';
+    // Handle Active Link
+    if (activeLink) {
+        const links = document.querySelectorAll(`[data-link="${activeLink}"]`);
+        links.forEach(l => l.classList.add('active'));
+    } else {
+        // Fallback: auto-detect
+        const path = window.location.pathname;
+        const page = path.split('/').pop() || 'index.html';
+        const map = {
+            'index.html': 'home',
+            'shop.html': 'shop',
+            'about.html': 'about',
+            'cart.html': 'cart'
+        };
+        const activeKey = map[page];
+        if (activeKey) {
+            document.querySelectorAll(`[data-link="${activeKey}"]`).forEach(l => l.classList.add('active'));
         }
-    });
+    }
 
-    // Sticky navbar effect on scroll
+    // Toggle Menu Function
+    function toggleMenu(force) {
+        const open = force !== undefined ? force : !mobileMenu.classList.contains('open');
+        mobileMenu.classList.toggle('open', open);
+        navScrim.classList.toggle('open', open);
+        hamburger.classList.toggle('active', open);
+        document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    hamburger?.addEventListener('click', () => toggleMenu());
+    navScrim?.addEventListener('click', () => toggleMenu(false));
+    mobileMenu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => toggleMenu(false)));
+
+    // Scroll Logic
+    if (heroMode) {
+        navbar.classList.add('hero-mode');
+    }
+
     let lastScroll = 0;
+    let scrollThreshold = 100;
+
     window.addEventListener('scroll', () => {
-        const currentScroll = window.pageYOffset;
+        const now = window.pageYOffset;
 
-        if (currentScroll > 100) {
-            navbar.classList.add('scrolled');
+        // Hero-mode color switching
+        if (heroMode) {
+            if (now > 80) {
+                navbar.classList.add('scrolled');
+                navbar.classList.remove('hero-mode');
+            } else {
+                navbar.classList.remove('scrolled');
+                navbar.classList.add('hero-mode');
+            }
         } else {
-            navbar.classList.remove('scrolled');
+            // Standard scroll shadow
+            if (now > 20) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
         }
 
-        // Hide navbar on scroll down, show on scroll up
-        if (currentScroll > lastScroll && currentScroll > 500) {
-            navbar.style.transform = 'translateY(-100%)';
-        } else {
-            navbar.style.transform = 'translateY(0)';
+        // Hide on Scroll Down logic
+        if (hideOnScroll) {
+            if (now > lastScroll && now > 400) {
+                // Scrolling down
+                navbar.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                navbar.style.transform = 'translateY(0)';
+            }
         }
 
-        lastScroll = currentScroll;
+        lastScroll = now;
     }, { passive: true });
 
-    // Set active link based on current page
-    const currentPath = window.location.pathname;
-    navLinks.querySelectorAll('.nav-link').forEach(link => {
-        const linkPath = new URL(link.href).pathname;
-        if (currentPath === linkPath ||
-            (currentPath === '/' && linkPath.includes('index')) ||
-            (currentPath.includes('pages') && linkPath.includes(currentPath.split('/').pop()))) {
-            link.classList.add('active');
-        }
-    });
-
-    updateAuthUI();
     updateCartDisplay();
-}
-
-function updateAuthUI() {
-    const authPlace = document.getElementById('authPlace');
-    if (!authPlace) return;
-
-    // Check if user is logged in
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-
-    if (user) {
-        authPlace.innerHTML = `
-            <a href="/dashboard" class="nav-link">
-                <span style="display: inline-flex; align-items: center; gap: 0.5rem;">
-                    <span>Profile</span>
-                </span>
-            </a>
-        `;
-    } else {
-        authPlace.innerHTML = `<a href="/auth" class="nav-link">Sign In</a>`;
-    }
+    updateAuthUI();
 }
 
 function updateCartDisplay() {
     const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const cartCount = document.getElementById('cartCount');
+    const total = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    if (cartCount) {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCount.textContent = totalItems;
-        cartCount.style.display = totalItems > 0 ? 'inline-flex' : 'none';
-    }
+    // Update Bracket version everywhere
+    const countBrackets = document.querySelectorAll('.cart-count-bracket');
+    countBrackets.forEach(el => {
+        el.textContent = total > 0 ? `(${total})` : '';
+    });
 }
 
-// Initialize on DOM load
-document.addEventListener('DOMContentLoaded', initNavbar);
+function updateAuthUI() {
+    const mobileAuth = document.getElementById('authPlaceMobile');
+    const desktopAuth = document.getElementById('authPlaceDesktop');
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
 
-// Listen for storage changes (cart updates from other tabs/windows)
-window.addEventListener('storage', (e) => {
-    if (e.key === 'cart') {
-        updateCartDisplay();
-    }
-    if (e.key === 'user') {
-        updateAuthUI();
-    }
-});
+    const authHTML = user
+        ? `<a href="dashboard.html" class="nav-link">Me</a>`
+        : `<a href="auth.html" class="nav-link">Login</a>`;
 
-// Make functions globally available
-window.updateAuthUI = updateAuthUI;
+    if (mobileAuth) mobileAuth.innerHTML = authHTML;
+    if (desktopAuth) desktopAuth.innerHTML = authHTML;
+}
+
+// Global exposure
 window.updateCartDisplay = updateCartDisplay;
+window.updateAuthUI = updateAuthUI;
+
+// Auto-init
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavbar);
+} else {
+    initNavbar();
+}

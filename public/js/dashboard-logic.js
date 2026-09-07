@@ -33,5 +33,5 @@ if (themeToggle) {
 
 function logout() {
     alert('Signing out...');
-    window.location.href = '/pages/auth.html';
+    window.location.href = 'auth.html';
 }

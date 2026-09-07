@@ -14,8 +14,37 @@ export function updateCartCount() {
     }
 }
 
+// Array updates for Firebase
+async function syncUserArrayToFirestore(type, itemOrList) {
+    const userStr = localStorage.getItem('user');
+    if (!userStr) return; // Only sync if logged in
+
+    try {
+        const user = JSON.parse(userStr);
+        const { db } = await import('./firebase-config.js');
+        const { doc, setDoc } = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js");
+
+        const userRef = doc(db, 'users', user.uid);
+
+        // Optimistically sync whatever is in local storage directly to the array
+        const listStr = localStorage.getItem(type) || '[]';
+        const listItems = JSON.parse(listStr);
+
+        const updateObj = {};
+        if (type === 'wishlist') {
+            updateObj.favorites = listItems.map(p => p.id);
+        } else {
+            updateObj.cart = listItems;
+        }
+
+        await setDoc(userRef, updateObj, { merge: true });
+    } catch (err) {
+        console.error("Error syncing to Firestore:", err);
+    }
+}
+
 // Add to cart function
-export function addToCart(productId, quantity = 1) {
+export async function addToCart(productId, quantity = 1) {
     const product = products.find(p => p.id === parseInt(productId));
     if (!product) return false;
 
@@ -31,23 +60,25 @@ export function addToCart(productId, quantity = 1) {
     }
 
     localStorage.setItem('cart', JSON.stringify(cart));
+    await syncUserArrayToFirestore('cart');
     updateCartCount();
     showNotification('Added to cart!', 'success');
     return true;
 }
 
 // Add to wishlist function
-export function addToWishlist(productId) {
+export async function addToWishlist(productId) {
     const product = products.find(p => p.id === parseInt(productId));
     if (!product) return false;
 
     if (!wishlist.find(item => item.id === product.id)) {
         wishlist.push(product);
         localStorage.setItem('wishlist', JSON.stringify(wishlist));
-        showNotification('Added to favorites!', 'success');
+        await syncUserArrayToFirestore('wishlist');
+        showNotification('Added to wishlist!', 'success');
         return true;
     } else {
-        showNotification('Already in favorites', 'info');
+        showNotification('Already in wishlist', 'info');
         return false;
     }
 }
@@ -98,83 +129,70 @@ function initScrollReveal() {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 }
 
-// Hero Carousel Logic - Fixed for smooth transitions
-function initHeroCarousel() {
-    const queue = document.getElementById('heroQueue');
-    if (!queue) return;
+// Hero Carousel removed - static background used instead
 
-    const featured = getFeaturedProducts().slice(0, 5);
-    let currentIndex = 0;
+// Helper to initialize custom horizontal sliders with dots
+function initSlider(sliderId, indicatorsId) {
+    const slider = document.getElementById(sliderId);
+    const indicatorsContainer = document.getElementById(indicatorsId);
+    if (!slider || !indicatorsContainer) return;
 
-    // Create cards once
-    queue.innerHTML = featured.map((product, index) => `
-        <div class="queue-item" data-index="${index}">
-            <img src="${product.image}" alt="${product.name}" loading="lazy">
-        </div>
+    const items = slider.children;
+    if (items.length === 0) return;
+
+    // Create dots
+    indicatorsContainer.innerHTML = Array.from(items).map((_, i) => `
+        <div class="indicator-dot-premium ${i === 0 ? 'active' : ''}" data-index="${i}"></div>
     `).join('');
 
-    const items = queue.querySelectorAll('.queue-item');
+    const dots = indicatorsContainer.querySelectorAll('.indicator-dot-premium');
 
-    function updateCarousel() {
-        items.forEach((item, index) => {
-            const relativeIndex = (index - currentIndex + featured.length) % featured.length;
+    // Update active dot on scroll
+    const scrollHint = slider.parentElement ? slider.parentElement.querySelector('.scroll-hint') : null;
 
-            // Remove all position classes
-            item.classList.remove('focus', 'back-right', 'back-left', 'hidden');
+    slider.addEventListener('scroll', () => {
+        const index = Math.round(slider.scrollLeft / slider.offsetWidth);
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
 
-            if (relativeIndex === 0) {
-                item.classList.add('focus');
-            } else if (relativeIndex === 1) {
-                item.classList.add('back-right');
-            } else if (relativeIndex === featured.length - 1) {
-                item.classList.add('back-left');
-            } else {
-                item.classList.add('hidden');
-            }
+        // Hide hint once user scrolls
+        if (scrollHint && slider.scrollLeft > 30) {
+            scrollHint.style.opacity = '0';
+            scrollHint.style.pointerEvents = 'none';
+        }
+    }, { passive: true });
+
+    // Click dot to scroll
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const index = parseInt(dot.dataset.index);
+            slider.scrollTo({
+                left: slider.offsetWidth * index,
+                behavior: 'smooth'
+            });
         });
-    }
-
-    function rotate() {
-        currentIndex = (currentIndex + 1) % featured.length;
-        updateCarousel();
-    }
-
-    // Add click handlers for the items themselves
-    items.forEach((item, index) => {
-        item.addEventListener('click', () => {
-            if (item.classList.contains('focus')) {
-                window.location.href = `/product?id=${featured[index].id}`;
-            }
-        });
-    });
-
-    updateCarousel();
-    let interval = setInterval(rotate, 4500);
-
-    queue.addEventListener('mouseenter', () => clearInterval(interval));
-    queue.addEventListener('mouseleave', () => {
-        clearInterval(interval);
-        interval = setInterval(rotate, 4500);
     });
 }
 
-// Featured Products Grid - Limit to 3 and fix reveal
+// Featured Products Grid
 function initFeaturedProducts() {
     const grid = document.getElementById('featuredProducts');
     if (!grid) return;
 
-    // We only want the top 3 featured products as requested
     const featured = getFeaturedProducts().slice(0, 3);
 
     grid.innerHTML = featured.map((product, index) => `
         <div class="product-card reveal" style="transition-delay: ${index * 0.1}s" data-product-id="${product.id}">
             <div class="card-img">
                 <img src="${product.image}" alt="${product.name}" loading="lazy">
+                ${product.stock === 0 ? '<div class="out-of-stock-badge">Out of Stock</div>' : ''}
             </div>
             <div class="product-info-minimal">
                 <span class="category-tag">${product.category}</span>
                 <h3>${product.name}</h3>
-                <p class="price">$${product.price}</p>
+                <div class="price-row">
+                    <p class="price">GH₵${product.price}</p>
+                    <span class="view-btn">View Detail <i class="fas fa-arrow-right"></i></span>
+                </div>
             </div>
         </div>
     `).join('');
@@ -190,13 +208,16 @@ function initFeaturedProducts() {
 
     grid.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Add click handlers
+    // Handle clicks (no drag needed as we use native scroll snap)
     grid.querySelectorAll('.product-card').forEach(card => {
         card.addEventListener('click', () => {
             const productId = card.dataset.productId;
-            window.location.href = `/product?id=${productId}`;
+            window.location.href = `product.html?id=${productId}`;
         });
     });
+
+    // Init custom slider logic for dots
+    initSlider('featuredProducts', 'featuredIndicators');
 }
 
 // Smooth scroll for anchor links
@@ -236,8 +257,8 @@ function initNewsletter() {
 document.addEventListener('DOMContentLoaded', () => {
     updateCartCount();
     initScrollReveal();
-    initHeroCarousel();
     initFeaturedProducts();
+    initSlider('testimonialsSlider', 'testimonialsIndicators');
     initSmoothScroll();
     initNewsletter();
 });
